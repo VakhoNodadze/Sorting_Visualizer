@@ -30,3 +30,5 @@ const InsertionSort = (nums) => {
   addToTrace(trace, nums, [...Array(nums.length).keys()]);
   return trace;
 };
+
+export default InsertionSort;
