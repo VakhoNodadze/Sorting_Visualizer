@@ -11,7 +11,8 @@ const getListOfBars = (
   groupB,
   groupC,
   groupD,
-  sortedIndices
+  sortedIndices,
+  trace
 ) => {
   return numbers.map((num, i) => {
     let width = 100 / numbers.length;
@@ -41,19 +42,20 @@ const getListOfBars = (
   });
 };
 
-const SortChart = ({
+const Sorter = ({
   numbers,
   maxNum,
   groupA,
   groupB,
   groupC,
   groupD,
-  sortedIndices
+  sortedIndices,
+  trace
 }) => {
   return (
     <div className="SortChart">
       {getListOfBars(
-        numbers || [3,11,15,20,19,26,22,34,45,46],
+        numbers,
         maxNum,
         groupA,
         groupB,
@@ -65,7 +67,7 @@ const SortChart = ({
   );
 };
 
-SortChart.propTypes = {
+Sorter.propTypes = {
   numbers: PropTypes.arrayOf(PropTypes.number),
   maxNum: PropTypes.number,
   groupA: PropTypes.arrayOf(PropTypes.number),
@@ -75,4 +77,4 @@ SortChart.propTypes = {
   sortedIndices: PropTypes.arrayOf(PropTypes.number)
 };
 
-export default SortChart;
+export default Sorter;

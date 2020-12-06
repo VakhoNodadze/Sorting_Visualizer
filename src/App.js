@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import InsertionSort from './algorithms/InsertionSort';
 import './App.css';
 import Sorter from './components/Sorter';
+import SortController from './components/SortController'
 import { render } from '@testing-library/react';
 
 
@@ -50,7 +51,8 @@ class App extends Component {
   render(){
     return (
       <div className="App">
-        <Sorter />
+        {/* <Sorter numbers={this.state.array} trace={this.state.trace} /> */}
+        <SortController numbers={this.state.array} trace={this.state.trace} />
       </div>
     );
   }
