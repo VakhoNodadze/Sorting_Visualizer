@@ -1,77 +1,78 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { randomFromInterval } from '../helpers/utils';
+import React from 'react';
+import PropTypes from 'prop-types';
+import './style.css';
+
 import Bar from './primitives/Bar';
-import {quickSort} from '../algorithms/quicksort';
 
-const Sorter = () => {
-  const [array, setArray ] = useState([]);
-    
-  useEffect(() => {
-    generateRandomArray();
-  }, []);
+const getListOfBars = (
+  numbers,
+  maxNum,
+  groupA,
+  groupB,
+  groupC,
+  groupD,
+  sortedIndices
+) => {
+  return numbers.map((num, i) => {
+    let width = 100 / numbers.length;
+    let height = 10 * 100;
+    // let stateA = groupA.includes(i);
+    // let stateB = groupB.includes(i);
+    // let stateC = groupC.includes(i);
+    // let stateD = groupD.includes(i);
+    // let sorted = sortedIndices.includes(i);
 
-  // createBars = (barSizes, sortType, sortObj) => {
-  //   let iteration, selectedIteration;
-  //   if (sortObj) {
-  //     iteration = sortObj.iteration;
-  //     selectedIteration = sortObj.selectedIteration;
-  //   }
-  //   let elementbars = [];
-  //   for (let i = 0; i < barSizes.length; i++) {
-  //     let color = "#9e9e9e";
-  //     if (sortType === "selection") {
-  //       if (i < iteration) {
-  //         color = "#5580af";
-  //       }
-  //       if (i == selectedIteration) {
-  //         color = "#5f5f5f";
-  //       }
-  //     } else if (sortType === "bubble" && i >= (barSizes.length - iteration)) {
-  //       color = "#5580af";
-  //     } else if (sortType === "quick") {
-  //       if (sortObj.pivoti === i) {
-  //         color = "#5f5f5f";
-  //       }
-  //       if (sortObj.pivotj === i) {
-  //         color = "#5f5f5f";
-  //       }
-  //       if (sortObj.pivots && sortObj.pivots.length > 0 && sortObj.pivots.indexOf(i) !== -1) {
-  //         color = "#5580af";
-  //       }
-  //     } 
-  //     elementbars.push(<Bar key={i} size={barSizes[i]}  total={barSizes.length} color={color} />);
-  //   }
-  //   return elementbars;
-  // }
+    let margin =
+      i === numbers.length ? '0' : width > 3 ? '0.5rem' : '0.125rem';
+    return (
+      <Bar
+        key={`${i}_${num}`}
+        width={width}
+        height={height}
+        val={width > 4 ? num : null}
+        // stateA={stateA}
+        // stateB={stateB}
+        // stateC={stateC}
+        // stateD={stateD}
+        // sorted={sorted}
+        style={{ marginRight: `${margin}` }}
+      />
+    );
+  });
+};
 
-  const doSort = () => {
-    const sortedArray = quickSort(array, 0, array.length - 1);
-    console.log('sortedArrray:', sortedArray);
-    setArray([...sortedArray]);
-  };
-
-  const generateRandomArray = () => {
-    let newArray = [];
-    for(let i = 0; i < 100; i++){
-      newArray.push(randomFromInterval(2, 100));
-    }
-    setArray(newArray);
-  };
-
+const SortChart = ({
+  numbers,
+  maxNum,
+  groupA,
+  groupB,
+  groupC,
+  groupD,
+  sortedIndices
+}) => {
   return (
-    <div style={{display: 'flex', alignItems: 'baseline'}}>
-      {console.log(array)}
-      {
-        array.map((item, index) => (
-          <Bar key={index} size={item} total={10} color="blue" />
-        ))
-      }
-      <button onClick={() => doSort()}>Sort</button>
-      <button onClick={() => generateRandomArray()}>Reset</button>
+    <div className="SortChart">
+      {getListOfBars(
+        numbers || [3,11,15,20,19,26,22,34,45,46],
+        maxNum,
+        groupA,
+        groupB,
+        groupC,
+        groupD,
+        sortedIndices
+      )}
     </div>
   );
 };
 
-export default Sorter;
+SortChart.propTypes = {
+  numbers: PropTypes.arrayOf(PropTypes.number),
+  maxNum: PropTypes.number,
+  groupA: PropTypes.arrayOf(PropTypes.number),
+  groupB: PropTypes.arrayOf(PropTypes.number),
+  groupC: PropTypes.arrayOf(PropTypes.number),
+  groupD: PropTypes.arrayOf(PropTypes.number),
+  sortedIndices: PropTypes.arrayOf(PropTypes.number)
+};
 
+export default SortChart;
