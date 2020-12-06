@@ -1,29 +1,40 @@
-import React, { useState, useEffect, useReducer } from 'react';
-import Sorter from './Sorter';
+import React, { Component } from 'react';
 import './style.css';
 
-const initialState = {
-  trace: [],
-  traceStep: -1,
+// Sub components
+import Sorter from './Sorter';
 
-  originalArray: [],
-  array: [],
-  groupA: [],
-  groupB: [],
-  groupC: [],
-  groupD: [],
-  sortedIndices: [],
+class SortVisualizer extends Component {
+  state = {
+    trace: [],
+    traceStep: -1,
 
-  timeoutIds: [],
-  playbackSpeed: 1
-};
+    originalArray: [],
+    array: [],
+    groupA: [],
+    groupB: [],
+    groupC: [],
+    groupD: [],
+    sortedIndices: [],
 
-const stateReducer = (state, action) => {
-  const { type, payload } = action;
-  switch(type){
-  case 'reset':
-    return {
-      ...state,
+    timeoutIds: [],
+    playbackSpeed: 1
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.array !== this.props.array) {
+      this._reset(this.props.array);
+    }
+    if (prevProps.trace !== this.props.trace) {
+      this.clearTimeouts();
+      this.setState({ trace: this.props.trace });
+    }
+  }
+
+  // Actions
+
+  _reset = (array) => {
+    this.setState({
       array,
       trace: [],
       traceStep: -1,
@@ -32,93 +43,131 @@ const stateReducer = (state, action) => {
       groupC: [],
       groupD: [],
       sortedIndices: [],
-      originalArray: [...payload]
-    };
-  case 'clear-timeouts':
-    timeoutIds.forEach((timeoutId) =>
+      originalArray: [...array]
+    });
+  };
+
+  clearTimeouts = () => {
+    this.state.timeoutIds.forEach((timeoutId) =>
       clearTimeout(timeoutId)
     );
-    return {
-      ...state,
-      timeoutIds: []
-    };
-  case 'visual-state':
-    return {
-      ...state,
-      array: payload.array,
-      groupA: payload.groupA,
-      groupB: payload.groupB,
-      groupC: payload.groupC,
-      groupD: payload.groupD,
-      sortedIndices: payload.sortedIndices
-    };
-  case 'run':
+    this.setState({ timeoutIds: [] });
+  };
+
+  _changeVisualState = (visualState) => {
+    this.setState({
+      array: visualState.array,
+      groupA: visualState.groupA,
+      groupB: visualState.groupB,
+      groupC: visualState.groupC,
+      groupD: visualState.groupD,
+      sortedIndices: visualState.sortedIndices
+    });
+  };
+
+  run = (trace) => {
     const timeoutIds = [];
-    const timer = 250 / state.playbackSpeed;
-    state.trace.forEach((item, i) => {
+    const timer = 250 / this.state.playbackSpeed;
+    console.log('ITEEEM', trace),
+
+    // Set a timeout for each item in the trace
+    trace.forEach((item, i) => {
       let timeoutId = setTimeout(
-        state.traceStep = state.traceStep + 1,
-        state.array = item.array,
-        state.groupA = item.groupA,
-        state.groupB = item.groupB,
-        state.groupC = item.groupC,
-        state.groupD = item.groupD,
-        state.sortedIndices = item.sortedIndices,
+        (item) => {
+          this.setState(
+            (prevState) => ({
+              traceStep: prevState.traceStep + 1
+            }),
+            this._changeVisualState(item)
+          );
+        },
         i * timer,
         item
       );
-        
+
       timeoutIds.push(timeoutId);
     });
 
     // Clear timeouts upon completion
     let timeoutId = setTimeout(
-      state.timeoutIds.forEach((timeoutId) =>
-        clearTimeout(timeoutId)
-      ),
-      state.timeoutIds = [],
-      state.trace.length * timer
+      this.clearTimeouts,
+      trace.length * timer
     );
     timeoutIds.push(timeoutId);
-    return {
-      ...state,
-      timeoutIds
-    };
-  default:
-    console.log('something went wrong');
-    break;
+
+    this.setState({ timeoutIds });
+  };
+
+  pause = () => {
+    this.clearTimeouts();
+  };
+
+  continue = () => {
+    const trace = this.state.trace.slice(this.state.traceStep);
+    this.run(trace);
+  };
+
+  stepForward = () => {
+    const trace = this.state.trace;
+    const step = this.state.traceStep;
+    if (step < trace.length - 1) {
+      const item = trace[step + 1];
+      this.setState(
+        { traceStep: step + 1 },
+        this._changeVisualState(item)
+      );
+    }
+  };
+
+  stepBackward = () => {
+    const trace = this.state.trace;
+    const step = this.state.traceStep;
+    if (step > 0) {
+      const item = trace[step - 1];
+      this.setState(
+        { traceStep: step - 1 },
+        this._changeVisualState(item)
+      );
+    }
+  };
+
+  repeat = () => {
+    this.clearTimeouts();
+    this.setState((prevState) => ({
+      array: [...prevState.originalArray],
+      traceStep: -1,
+      comparing: [],
+      compared: [],
+      sorted: []
+    }));
+    this.run(this.state.trace);
+  };
+
+  adjustPlaybackSpeed = (speed) => {
+    const playing = this.state.timeoutIds.length > 0;
+    this.pause();
+    const playbackSpeed = Number(speed.split('x')[0]);
+    this.setState({ playbackSpeed }, () => {
+      if (playing) {this.continue();}
+    });
+  };
+
+  render() {
+    return (
+      <div className="SortVisualizer">
+        <Sorter
+          numbers={this.state.array}
+          maxNum={Math.max(...this.state.array)}
+          groupA={this.state.groupA}
+          groupB={this.state.groupB}
+          groupC={this.state.groupC}
+          groupD={this.state.groupD}
+          sortedIndices={this.state.sortedIndices}
+        />
+        <button onClick={this.run.bind(this, this.state.trace)}>Sort it!</button>
+      </div>
+    );
   }
-  return state;
-};
+}
 
-const SortController = ({numbers, trace}) => {
-
-  const [state, dispatch] = useReducer(stateReducer, initialState);
-
-  useEffect(() => {
-    state.array = numbers;
-    state.trace = trace;
-  }, [numbers, trace]);
-
-  useEffect(() => {
-    dispatch({type: 'change-visual'});
-  }, [state.traceStep]);
-
-
-  return (
-    <div className="SortController">
-      <Sorter
-        numbers={state.array}
-        maxNum={Math.max(...state.array)}
-        groupA={state.groupA}
-        groupB={state.groupB}
-        groupC={state.groupC}
-        groupD={state.groupD}
-        sortedIndices={state.sortedIndices}
-      />
-      <button onClick={() => dispatch({type: 'run', payload: state.trace})}>Sort bliad</button>
-    </div>
-  );
-};
-
-export default SortController;
+export default SortVisualizer;
