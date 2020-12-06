@@ -1,24 +1,29 @@
 import logo from './logo.svg';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import InsertionSort from './algorithms/InsertionSort';
 import './App.css';
 import Sorter from './components/Sorter';
 import SortController from './components/SortController';
 import { render } from '@testing-library/react';
+import { useEffect } from 'react';
 
 
-class App extends Component {
+const App = () => {
   
-  state = {
-    array: [],
-    trace: []
-  };
+  const [state, setState] = useState({array: [], trace: []});
 
-  componentDidMount() {
-    this.generateRandomArray();
-  }
+  // componentDidMount() {
+  //   this.generateRandomArray();
+  // }
 
-  generateRandomArray = () => {
+  useEffect(() => {
+    createTrace();
+  }, [state.array]);
+  useEffect(() => {
+    generateRandomArray();
+  }, []);
+
+  const generateRandomArray = () => {
     // Generate pseudo-random number between 1 and max
     function getRandomInt(max) {
       return Math.floor(Math.random() * Math.floor(max)) + 1;
@@ -29,33 +34,23 @@ class App extends Component {
       .fill(0)
       .map(() => getRandomInt(10 * 5));
 
-    this.setState(
-      {
-        array,
-        trace: []
-      },
-      this.createTrace
-    );
-    this.createTrace();
+    setState({array,trace: []});
   };
 
-  createTrace = () => {
-    const numbers = [...this.state.array];
+  const createTrace = () => {
+    const numbers = [...state.array];
     const sort = InsertionSort;
     if (sort) {
       const trace = sort(numbers);
-      this.setState({ trace });
+      setState({ ...state, trace });
     }
   };
-
-  render(){
-    return (
-      <div className="App">
-        {/* <Sorter numbers={this.state.array} trace={this.state.trace} /> */}
-        <SortController array={this.state.array} trace={this.state.trace} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="App">
+      {/* <Sorter numbers={this.state.array} trace={this.state.trace} /> */}
+      <SortController array={state.array} trace={state.trace} />
+    </div>
+  );
+};
 
 export default App;
