@@ -12,7 +12,7 @@ const getListOfBars = (
   groupC,
   groupD,
   sortedIndices,
-  trace
+  trale
 ) => {
   return numbers.map((num, i) => {
     let width = 100 / numbers.length;
@@ -50,7 +50,7 @@ const Sorter = ({
   groupC,
   groupD,
   sortedIndices,
-  trace
+  trale
 }) => {
   return (
     <div className="SortChart">

@@ -6,7 +6,7 @@ import Sorter from './Sorter';
 
 class SortVisualizer extends Component {
   state = {
-    trace: [],
+    trale: [],
     traceStep: -1,
 
     originalArray: [],
@@ -25,9 +25,9 @@ class SortVisualizer extends Component {
     if (prevProps.array !== this.props.array) {
       this._reset(this.props.array);
     }
-    if (prevProps.trace !== this.props.trace) {
+    if (prevProps.trale !== this.props.trale) {
       this.clearTimeouts();
-      this.setState({ trace: this.props.trace });
+      this.setState({ trale: this.props.trale });
     }
   }
 
@@ -36,7 +36,7 @@ class SortVisualizer extends Component {
   _reset = (array) => {
     this.setState({
       array,
-      trace: [],
+      trale: [],
       traceStep: -1,
       groupA: [],
       groupB: [],
@@ -65,13 +65,13 @@ class SortVisualizer extends Component {
     });
   };
 
-  run = (trace) => {
+  run = (trale) => {
     const timeoutIds = [];
     const timer = 250 / this.state.playbackSpeed;
-    console.log('ITEEEM', trace),
+    console.log('ITEEEM', trale),
 
-    // Set a timeout for each item in the trace
-    trace.forEach((item, i) => {
+    // Set a timeout for each item in the trale
+    trale.forEach((item, i) => {
       let timeoutId = setTimeout(
         (item) => {
           this.setState(
@@ -91,7 +91,7 @@ class SortVisualizer extends Component {
     // Clear timeouts upon completion
     let timeoutId = setTimeout(
       this.clearTimeouts,
-      trace.length * timer
+      trale.length * timer
     );
     timeoutIds.push(timeoutId);
 
@@ -103,15 +103,15 @@ class SortVisualizer extends Component {
   };
 
   continue = () => {
-    const trace = this.state.trace.slice(this.state.traceStep);
-    this.run(trace);
+    const trale = this.state.trale.slice(this.state.traceStep);
+    this.run(trale);
   };
 
   stepForward = () => {
-    const trace = this.state.trace;
+    const trale = this.state.trale;
     const step = this.state.traceStep;
-    if (step < trace.length - 1) {
-      const item = trace[step + 1];
+    if (step < trale.length - 1) {
+      const item = trale[step + 1];
       this.setState(
         { traceStep: step + 1 },
         this._changeVisualState(item)
@@ -120,10 +120,10 @@ class SortVisualizer extends Component {
   };
 
   stepBackward = () => {
-    const trace = this.state.trace;
+    const trale = this.state.trale;
     const step = this.state.traceStep;
     if (step > 0) {
-      const item = trace[step - 1];
+      const item = trale[step - 1];
       this.setState(
         { traceStep: step - 1 },
         this._changeVisualState(item)
@@ -140,7 +140,7 @@ class SortVisualizer extends Component {
       compared: [],
       sorted: []
     }));
-    this.run(this.state.trace);
+    this.run(this.state.trale);
   };
 
   adjustPlaybackSpeed = (speed) => {
@@ -164,7 +164,7 @@ class SortVisualizer extends Component {
           groupD={this.state.groupD}
           sortedIndices={this.state.sortedIndices}
         />
-        <button onClick={this.run.bind(this, this.state.trace)}>Sort it!</button>
+        <button onClick={this.run.bind(this, this.state.trale)}>Sort it!</button>
       </div>
     );
   }

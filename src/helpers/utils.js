@@ -1,4 +1,4 @@
-export const newTrace = (array) => {
+export const newTrale = (array) => {
   return [
     {
       array: [...array],
@@ -11,8 +11,8 @@ export const newTrace = (array) => {
   ];
 };
 
-export const addToTrace = (
-  trace,
+export const addToTrale = (
+  trale,
   array,
   sortedIndices = [],
   groupA = [],
@@ -20,7 +20,7 @@ export const addToTrace = (
   groupC = [],
   groupD = []
 ) => {
-  trace.push({
+  trale.push({
     array: [...array],
     groupA: [...groupA],
     groupB: [...groupB],
@@ -30,8 +30,8 @@ export const addToTrace = (
   });
 };
 
-export const lastSorted = (trace) => {
-  return trace[trace.length - 1].sortedIndices;
+export const lastSorted = (trale) => {
+  return trale[trale.length - 1].sortedIndices;
 };
 
 export const swap = (array, i, j) => {

@@ -1,20 +1,13 @@
-import logo from './logo.svg';
 import React, { useState } from 'react';
 import InsertionSort from './algorithms/InsertionSort';
 import './App.css';
-import Sorter from './components/Sorter';
 import SortController from './components/SortController';
-import { render } from '@testing-library/react';
 import { useEffect } from 'react';
 
 
 const App = () => {
   
-  const [state, setState] = useState({array: [], trace: []});
-
-  // componentDidMount() {
-  //   this.generateRandomArray();
-  // }
+  const [state, setState] = useState({array: [], trale: []});
 
   useEffect(() => {
     createTrace();
@@ -23,32 +16,34 @@ const App = () => {
     generateRandomArray();
   }, []);
 
+
+  const getRandomInt = (max) => {
+    return Math.floor(Math.random() * Math.floor(max)) + 1;
+  };
+
   const generateRandomArray = () => {
     // Generate pseudo-random number between 1 and max
-    function getRandomInt(max) {
-      return Math.floor(Math.random() * Math.floor(max)) + 1;
-    }
-
+    getRandomInt();
     // Generate an array of length max
     const array = Array(10)
       .fill(0)
       .map(() => getRandomInt(10 * 5));
 
-    setState({array,trace: []});
+    setState({array,trale: []});
   };
 
   const createTrace = () => {
     const numbers = [...state.array];
     const sort = InsertionSort;
     if (sort) {
-      const trace = sort(numbers);
-      setState({ ...state, trace });
+      const trale = sort(numbers);
+      setState({ ...state, trale });
     }
   };
   return (
     <div className="App">
-      {/* <Sorter numbers={this.state.array} trace={this.state.trace} /> */}
-      <SortController array={state.array} trace={state.trace} />
+      {/* <Sorter numbers={this.state.array} trale={this.state.trale} /> */}
+      <SortController array={state.array} trale={state.trale} />
     </div>
   );
 };
