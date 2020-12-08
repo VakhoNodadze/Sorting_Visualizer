@@ -54,7 +54,7 @@ class SortVisualizer extends Component {
     this.setState({ timeoutIds: [] });
   };
 
-  _changeVisualState = (visualState) => {
+  animate = (visualState) => {
     this.setState({
       array: visualState.array,
       groupA: visualState.groupA,
@@ -68,7 +68,6 @@ class SortVisualizer extends Component {
   run = (trale) => {
     const timeoutIds = [];
     const timer = 250 / this.state.playbackSpeed;
-    console.log('ITEEEM', trale),
 
     // Set a timeout for each item in the trale
     trale.forEach((item, i) => {
@@ -78,7 +77,7 @@ class SortVisualizer extends Component {
             (prevState) => ({
               traceStep: prevState.traceStep + 1
             }),
-            this._changeVisualState(item)
+            this.animate(item)
           );
         },
         i * timer,
@@ -107,14 +106,14 @@ class SortVisualizer extends Component {
     this.run(trale);
   };
 
-  stepForward = () => {
+  stepNext = () => {
     const trale = this.state.trale;
     const step = this.state.traceStep;
     if (step < trale.length - 1) {
       const item = trale[step + 1];
       this.setState(
         { traceStep: step + 1 },
-        this._changeVisualState(item)
+        this.animate(item)
       );
     }
   };
@@ -126,7 +125,7 @@ class SortVisualizer extends Component {
       const item = trale[step - 1];
       this.setState(
         { traceStep: step - 1 },
-        this._changeVisualState(item)
+        this.animate(item)
       );
     }
   };

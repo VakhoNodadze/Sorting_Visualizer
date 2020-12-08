@@ -42,7 +42,6 @@ const App = () => {
   };
   return (
     <div className="App">
-      {/* <Sorter numbers={this.state.array} trale={this.state.trale} /> */}
       <SortController array={state.array} trale={state.trale} />
     </div>
   );

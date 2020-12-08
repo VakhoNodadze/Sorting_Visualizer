@@ -15,54 +15,31 @@ const getListOfBars = (
   trale
 ) => {
   return numbers.map((num, i) => {
-    let width = 100 / numbers.length;
-    let height = 10 * 100;
-    // let stateA = groupA.includes(i);
-    // let stateB = groupB.includes(i);
-    // let stateC = groupC.includes(i);
-    // let stateD = groupD.includes(i);
-    // let sorted = sortedIndices.includes(i);
+    let width = 200 / numbers.length;
+    let stateA = groupA.includes(i);
+    let stateB = groupB.includes(i);
+    let stateC = groupC.includes(i);
+    let stateD = groupD.includes(i);
+    let sorted = sortedIndices.includes(i);
 
-    let margin =
-      i === numbers.length ? '0' : width > 3 ? '0.5rem' : '0.125rem';
     return (
-      <Bar
-        key={`${i}_${num}`}
-        width={width}
-        height={height}
-        val={width > 4 ? num : null}
-        // stateA={stateA}
-        // stateB={stateB}
-        // stateC={stateC}
-        // stateD={stateD}
-        // sorted={sorted}
-        style={{ marginRight: `${margin}` }}
+      <Bar key={`${i}_${num}`} 
+        width={width} 
+        val={width > 4 ? num : null} 
+        stateA={stateA} 
+        stateB={stateB} 
+        stateC={stateC} 
+        stateD={stateD} 
+        sorted={sorted} 
       />
     );
   });
 };
 
-const Sorter = ({
-  numbers,
-  maxNum,
-  groupA,
-  groupB,
-  groupC,
-  groupD,
-  sortedIndices,
-  trale
-}) => {
+const Sorter = ({numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices,trale}) => {
   return (
     <div className="SortChart">
-      {getListOfBars(
-        numbers,
-        maxNum,
-        groupA,
-        groupB,
-        groupC,
-        groupD,
-        sortedIndices
-      )}
+      {getListOfBars(numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices)}
     </div>
   );
 };
