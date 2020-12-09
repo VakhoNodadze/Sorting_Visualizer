@@ -22,7 +22,7 @@ export default Bar;
 
 const BarContainer = styled.div`
   display: flex;
-  width: ${(props) => props.width}px;
+  width: ${(props) => props.width}%;
   height: ${(props) => props.height * 5}px;
   flex-direction: column reverse;
   align-items: flex-end;

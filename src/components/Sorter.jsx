@@ -15,7 +15,7 @@ const getListOfBars = (
   trale
 ) => {
   return numbers.map((num, i) => {
-    let width = 200 / numbers.length;
+    let width = 100 / numbers.length;
     let stateA = groupA.includes(i);
     let stateB = groupB.includes(i);
     let stateC = groupC.includes(i);

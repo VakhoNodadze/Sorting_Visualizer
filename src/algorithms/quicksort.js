@@ -11,26 +11,26 @@ const partition = (array, left, right) => {
   while (i <= j) {
     while (array[i].value < pivot) {
       i++;
-      // return {array, pivot, pivoti: i, pivotj: j, completed: false};
+      // return {array, pivot, pivoti: i, pivotj: j, sorting: false};
     }
     while (array[j].value > pivot) {
       j--;
-      // return {array, pivot, pivoti: i, pivotj: j, completed: false};
+      // return {array, pivot, pivoti: i, pivotj: j, sorting: false};
     }
     if (i <= j) {
       swap(array, i, j); //swap two elements
       i++;
       j--;
-      // return {array, pivot, pivoti: i, pivotj: j, completed: false};
+      // return {array, pivot, pivoti: i, pivotj: j, sorting: false};
     }
   }
-  return {array, pivot, pivoti: i, pivotj: j, completed: true};
+  return {array, pivot, pivoti: i, pivotj: j, sorting: true};
 };
 
 export const quickSort = (array, left, right) => {
   let index;
   if (array.length > 1) {
-    const { array: newArray, completed, pivoti} = partition(array, left, right); //index returned from partition
+    const { array: newArray, sorting, pivoti} = partition(array, left, right); //index returned from partition
     if (left < pivoti - 1) { //more elements on the left side of the pivot
       quickSort(newArray, left, pivoti - 1);
     }

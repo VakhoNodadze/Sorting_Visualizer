@@ -3,41 +3,43 @@ import './style.css';
 
 // Sub components
 import Sorter from './Sorter';
+import Button from './primitives/Button';
 
 class SortVisualizer extends Component {
-  state = {
-    trale: [],
-    traceStep: -1,
-
-    originalArray: [],
-    array: [],
-    groupA: [],
-    groupB: [],
-    groupC: [],
-    groupD: [],
-    sortedIndices: [],
-
-    timeoutIds: [],
-    playbackSpeed: 1
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      trale: [],
+      traleStep: -1,
+  
+      originalArray: [],
+      array: [],
+      groupA: [],
+      groupB: [],
+      groupC: [],
+      groupD: [],
+      sortedIndices: [],
+      sorting: false,
+  
+      playbackSpeed: 1
+    };
+    this.run = this.run.bind(this);
+  }
 
   componentDidUpdate(prevProps) {
     if (prevProps.array !== this.props.array) {
-      this._reset(this.props.array);
+      this.randomizeArray(this.props.array);
     }
     if (prevProps.trale !== this.props.trale) {
-      this.clearTimeouts();
       this.setState({ trale: this.props.trale });
     }
   }
 
-  // Actions
-
-  _reset = (array) => {
+  randomizeArray = (array) => {
     this.setState({
       array,
       trale: [],
-      traceStep: -1,
+      traleStep: -1,
       groupA: [],
       groupB: [],
       groupC: [],
@@ -47,72 +49,59 @@ class SortVisualizer extends Component {
     });
   };
 
-  clearTimeouts = () => {
-    this.state.timeoutIds.forEach((timeoutId) =>
-      clearTimeout(timeoutId)
-    );
-    this.setState({ timeoutIds: [] });
-  };
 
   animate = (visualState) => {
+    const { array, groupA, groupB, groupC, groupD, sortedIndices, sorting } = visualState;
     this.setState({
-      array: visualState.array,
-      groupA: visualState.groupA,
-      groupB: visualState.groupB,
-      groupC: visualState.groupC,
-      groupD: visualState.groupD,
-      sortedIndices: visualState.sortedIndices
+      array: array,
+      groupA: groupA,
+      groupB: groupB,
+      groupC: groupC,
+      groupD: groupD,
+      sortedIndices: sortedIndices,
+      sorting: sorting
     });
   };
 
   run = (trale) => {
-    const timeoutIds = [];
     const timer = 250 / this.state.playbackSpeed;
-
-    // Set a timeout for each item in the trale
-    trale.forEach((item, i) => {
-      let timeoutId = setTimeout(
-        (item) => {
-          this.setState(
-            (prevState) => ({
-              traceStep: prevState.traceStep + 1
-            }),
-            this.animate(item)
-          );
-        },
-        i * timer,
-        item
-      );
-
-      timeoutIds.push(timeoutId);
-    });
-
-    // Clear timeouts upon completion
-    let timeoutId = setTimeout(
-      this.clearTimeouts,
-      trale.length * timer
+    this.setState(
+      {sorting: true},
+      trale.forEach((item, i) => {
+        setTimeout(
+          (item) => {
+            this.setState(
+              (prevState) => ({
+                traleStep: prevState.traleStep + 1
+              }),
+              this.animate(item)
+            );
+          },
+          i * timer,
+          item
+        );
+      })
     );
-    timeoutIds.push(timeoutId);
 
-    this.setState({ timeoutIds });
+    
   };
 
   pause = () => {
-    this.clearTimeouts();
+    this.setState({sorting: false});
   };
 
   continue = () => {
-    const trale = this.state.trale.slice(this.state.traceStep);
+    const trale = this.state.trale.slice(this.state.traleStep);
     this.run(trale);
   };
 
   stepNext = () => {
     const trale = this.state.trale;
-    const step = this.state.traceStep;
+    const step = this.state.traleStep;
     if (step < trale.length - 1) {
       const item = trale[step + 1];
       this.setState(
-        { traceStep: step + 1 },
+        { traleStep: step + 1 },
         this.animate(item)
       );
     }
@@ -120,26 +109,14 @@ class SortVisualizer extends Component {
 
   stepBackward = () => {
     const trale = this.state.trale;
-    const step = this.state.traceStep;
+    const step = this.state.traleStep;
     if (step > 0) {
       const item = trale[step - 1];
       this.setState(
-        { traceStep: step - 1 },
+        { traleStep: step - 1 },
         this.animate(item)
       );
     }
-  };
-
-  repeat = () => {
-    this.clearTimeouts();
-    this.setState((prevState) => ({
-      array: [...prevState.originalArray],
-      traceStep: -1,
-      comparing: [],
-      compared: [],
-      sorted: []
-    }));
-    this.run(this.state.trale);
   };
 
   adjustPlaybackSpeed = (speed) => {
@@ -152,18 +129,20 @@ class SortVisualizer extends Component {
   };
 
   render() {
+    const { array, groupA, groupB, groupC, groupD, sortedIndices,sorting, trale } = this.state;
     return (
       <div className="SortVisualizer">
         <Sorter
-          numbers={this.state.array}
-          maxNum={Math.max(...this.state.array)}
-          groupA={this.state.groupA}
-          groupB={this.state.groupB}
-          groupC={this.state.groupC}
-          groupD={this.state.groupD}
-          sortedIndices={this.state.sortedIndices}
+          numbers={array}
+          maxNum={Math.max(...array)}
+          groupA={groupA}
+          groupB={groupB}
+          groupC={groupC}
+          groupD={groupD}
+          sortedIndices={sortedIndices}
         />
-        <button onClick={this.run.bind(this, this.state.trale)}>Sort it!</button>
+        <Button 
+          onClick={ sorting ? () => this.pause() : () => this.run(trale) }> {sorting ? 'Stop!' : 'Sort it!!'}</Button>
       </div>
     );
   }

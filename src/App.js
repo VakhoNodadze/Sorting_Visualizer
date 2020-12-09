@@ -22,12 +22,14 @@ const App = () => {
   };
 
   const generateRandomArray = () => {
-    // Generate pseudo-random number between 1 and max
-    getRandomInt();
     // Generate an array of length max
-    const array = Array(10)
-      .fill(0)
-      .map(() => getRandomInt(10 * 5));
+    // const array = Array(10)
+    //   .fill(0)
+    //   .map(() => getRandomInt(10 * 5));
+    const array = [];
+    for(let i = 0; i < 10; i++){
+      array.push(getRandomInt(70));
+    }
 
     setState({array,trale: []});
   };

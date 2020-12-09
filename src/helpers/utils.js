@@ -18,7 +18,8 @@ export const addToTrale = (
   groupA = [],
   groupB = [],
   groupC = [],
-  groupD = []
+  groupD = [],
+  sorting = true
 ) => {
   trale.push({
     array: [...array],
@@ -26,7 +27,8 @@ export const addToTrale = (
     groupB: [...groupB],
     groupC: [...groupC],
     groupD: [...groupD],
-    sortedIndices: [...sortedIndices]
+    sortedIndices: [...sortedIndices],
+    sorting
   });
 };
 
