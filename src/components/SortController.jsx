@@ -19,11 +19,12 @@ class SortVisualizer extends Component {
       groupC: [],
       groupD: [],
       sortedIndices: [],
-      sorting: false,
   
-      playbackSpeed: 1
+      playbackSpeed: 1,
+      timeouts: []
     };
     this.run = this.run.bind(this);
+    this.continue = this.continue.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -50,44 +51,51 @@ class SortVisualizer extends Component {
   };
 
 
-  animate = (visualState) => {
-    const { array, groupA, groupB, groupC, groupD, sortedIndices, sorting } = visualState;
+  animate = (currentState) => {
+    const { array, groupA, groupB, groupC, groupD, sortedIndices } = currentState;
     this.setState({
       array: array,
       groupA: groupA,
       groupB: groupB,
       groupC: groupC,
       groupD: groupD,
-      sortedIndices: sortedIndices,
-      sorting: sorting
+      sortedIndices: sortedIndices
     });
+  };
+
+  clearTimeouts = () => {
+    this.state.timeouts.forEach((timeout) =>
+      clearTimeout(timeout)
+    );
+    console.log('clearing');
+    this.setState({ timeouts: [] });
   };
 
   run = (trale) => {
     const timer = 250 / this.state.playbackSpeed;
-    this.setState(
-      {sorting: true},
-      trale.forEach((item, i) => {
-        setTimeout(
-          (item) => {
-            this.setState(
-              (prevState) => ({
-                traleStep: prevState.traleStep + 1
-              }),
-              this.animate(item)
-            );
-          },
-          i * timer,
-          item
-        );
-      })
-    );
+    trale.forEach((item, i) => {
+      let timeout = setTimeout(
+        (item) => {
+          this.setState(
+            (prevState) => ({
+              traleStep: prevState.traleStep + 1
+            }),
+            this.animate(item)
+          );
+        },
+        i * timer,
+        item
+      );
 
+      this.setState((prevState) => ({
+        timeouts: [...prevState.timeouts, timeout]
+      }));
+    });
     
   };
 
   pause = () => {
-    this.setState({sorting: false});
+    this.clearTimeouts();
   };
 
   continue = () => {
@@ -129,7 +137,7 @@ class SortVisualizer extends Component {
   };
 
   render() {
-    const { array, groupA, groupB, groupC, groupD, sortedIndices,sorting, trale } = this.state;
+    const { array, groupA, groupB, groupC, groupD, sortedIndices, timeouts, trale } = this.state;
     return (
       <div className="SortVisualizer">
         <Sorter
@@ -142,7 +150,7 @@ class SortVisualizer extends Component {
           sortedIndices={sortedIndices}
         />
         <Button 
-          onClick={ sorting ? () => this.pause() : () => this.run(trale) }> {sorting ? 'Stop!' : 'Sort it!!'}</Button>
+          onClick={ timeouts.length > 0 ? () => this.pause() : () => this.run(trale) }> {timeouts.length > 0 ? 'Stop!' : 'Sort it!!'}</Button>
       </div>
     );
   }

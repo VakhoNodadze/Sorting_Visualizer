@@ -26,7 +26,7 @@ const InsertionSort = (nums) => {
   }
 
   // Visualize: Mark all elements as sorted
-  addToTrale(trale, nums, [...Array(nums.length).keys()], [], [], [], [], false);
+  addToTrale(trale, nums, [...Array(nums.length).keys()]);
   return trale;
 };
 
