@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.css';
+import styled from 'styled-components';
+import { withTheme } from 'styled-components';
 
 import Bar from './primitives/Bar';
+import Flex from './primitives/Flex';
 
 const getListOfBars = (
   numbers,
@@ -36,11 +38,11 @@ const getListOfBars = (
   });
 };
 
-const Sorter = ({numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices,trale}) => {
+const Sorter = ({numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices,trale, theme}) => {
   return (
-    <div className="SortChart">
+    <Flex full align="flex-end" padding={theme.padding.huge, 0} style={{backgroundColor: theme.color.primaryBG}}>
       {getListOfBars(numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices)}
-    </div>
+    </Flex>
   );
 };
 
@@ -54,4 +56,16 @@ Sorter.propTypes = {
   sortedIndices: PropTypes.arrayOf(PropTypes.number)
 };
 
-export default Sorter;
+export default withTheme(Sorter);
+
+
+const Container = styled.div `
+  width: 100%;
+  height: 40vh;
+  padding: 1rem;
+  display: flex;
+  background-color:${props => props.bg};
+  flex-direction: row;
+  align-items: flex-end;
+  transition: 0.75s ease-in-out;
+`;

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import './style.css';
-
+import styled from 'styled-components';
+import { withTheme } from 'styled-components';
 // Sub components
 import Sorter from './Sorter';
 import Button from './primitives/Button';
+import { themes } from '../styled/themes';
 
-class SortVisualizer extends Component {
+class SortController extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -136,10 +137,25 @@ class SortVisualizer extends Component {
     });
   };
 
+  handleClick = () => {
+    const { timeouts, trale, traceStep } = this.state;
+    if (timeouts.length > 0){
+      return this.pause();
+    }
+    if(traceStep > -1) {
+      return this.continue();
+    }
+    return this.run(trale);
+  }
+
+
+
   render() {
-    const { array, groupA, groupB, groupC, groupD, sortedIndices, timeouts, trale } = this.state;
+    const { array, groupA, groupB, groupC, groupD, sortedIndices, timeouts } = this.state;
+    const { theme, setTheme } = this.props;
+    const sorting = timeouts.length > 0;
     return (
-      <div className="SortVisualizer">
+      <Container>
         <Sorter
           numbers={array}
           maxNum={Math.max(...array)}
@@ -150,10 +166,22 @@ class SortVisualizer extends Component {
           sortedIndices={sortedIndices}
         />
         <Button 
-          onClick={ timeouts.length > 0 ? () => this.pause() : () => this.run(trale) }> {timeouts.length > 0 ? 'Stop!' : 'Sort it!!'}</Button>
-      </div>
+          variant="contained"
+          color="primary"
+          onClick={() => this.handleClick()}> 
+          {sorting > 0 ? 'Stop!' : 'Sort it!!'}
+        </Button>
+        <Button onClick={() => setTheme()}>Change theme</Button>
+      </Container>
     );
   }
 }
 
-export default SortVisualizer;
+export default withTheme(SortController);
+
+const Container = styled.div `
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;

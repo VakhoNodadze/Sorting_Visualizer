@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${(props) => props.theme.fontFamily.default};
     font-size: ${(props) => props.theme.fontSize.default};
     color: ${(props) => props.theme.color.text};
+    margin: 0;
   }
 
   h1, h2, h3, h4, h5, h6, button {

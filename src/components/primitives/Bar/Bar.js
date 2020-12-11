@@ -24,11 +24,12 @@ const BarContainer = styled.div`
   display: flex;
   width: ${(props) => props.width}%;
   height: ${(props) => props.height * 5}px;
-  flex-direction: column reverse;
   align-items: flex-end;
   transition: 125ms ease-in-out;
   color: rgb(58, 58, 60);
-  margin: 20px;
+  margin: 1.2rem 1.2rem 0.1rem 1.2rem;
+  justify-content: center;
+  border-radius: 5px;
   background-color: ${(props) => {
     switch (props.state) {
     case 'stateA':
@@ -40,12 +41,12 @@ const BarContainer = styled.div`
     case 'sorted':
       return 'green';
     default:
-      return 'black';
+      return '#fff';
     }
   }};
 `;
 
 const Text = styled.span `
-  margin: - auto 0.25rem;
-  color: #fff;
+  margin: auto 0.25rem;
+  color: #000;
 `;

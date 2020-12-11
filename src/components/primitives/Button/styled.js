@@ -7,7 +7,7 @@ const StyledContainer = styled.button`
   letter-spacing: 0.4px;
   width: ${(props) => (props.fluid ? '100%' : 'auto')};
   font-size: ${(props) => props.theme.fontSize[props.size]};
-  padding: ${(props) => props.theme.paddingVertical[props.size]} ${(props) => props.theme.paddingHorizontal[props.size]};
+  padding: ${(props) => props.theme.padding[props.size]};
   border-radius: ${(props) => props.theme.borderRadius[props.size]};
 
   ${(props) => {
