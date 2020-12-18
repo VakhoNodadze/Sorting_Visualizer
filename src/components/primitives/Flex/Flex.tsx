@@ -1,6 +1,24 @@
 import styled, { css } from 'styled-components';
 
-const Flex = styled.div`
+interface Props {
+  inline?: string;
+  direction?: string;
+  wrap?: string;
+  justify?: string;
+  alignContent?: string;
+  align?: string;
+  full?: boolean;
+  center?: boolean;
+  width?: string;
+  height?: string;
+  margin?: string;
+  padding?: any;
+  flex?: string;
+  position?: string;
+  hide?: boolean;
+}
+
+const Flex = styled.div<Props>`
   display: flex;
   align-content: stretch;
   transition: all 0.3s, opacity 0.5s ease;

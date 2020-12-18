@@ -1,40 +1,44 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import InsertionSort from './algorithms/InsertionSort';
 import { ThemeProvider } from 'styled-components';
-import { themes, light, dark } from './styled/themes';
+
+import { lightTheme, darkTheme, ThemeProps } from './styled/themes';
 import SortController from './components/SortController';
 import GlobalStyle from './styled/global';
 import Flex from './components/primitives/Flex';
 import { useEffect } from 'react';
 
+interface State {
+  array: number[];
+  trale: Object[];
+}
 
-const Main = () => {
+const Main: FC = () => {
   
-  const [state, setState] = useState({array: [], trale: []});
-  const [theme, setTheme] = useState(light);
-  const [background, setBackground] = useState(light.color.secondaryBG);
+  const [state, setState] = useState<State> ({array: [], trale: []});
+  const [theme, setTheme] = useState(lightTheme);
+  const [background, setBackground] = useState(theme.themeColors.primaryBg);
 
   useEffect(() => {
     createTrace();
   }, [state.array]);
 
-  useEffect(() => {
-    setBackground(theme.color.secondaryBG);
-    console.log('_______________', theme);
-  }, [theme]);
+  // useEffect(() => {
+  //   setBackground(theme.color.secondaryBG);
+  // }, [theme]);
 
   useEffect(() => {
     generateRandomArray();
   }, []);
 
 
-  const getRandomInt = (max) => {
+  const getRandomInt = (max: number) => {
     return Math.floor(Math.random() * Math.floor(max)) + 1;
   };
 
   const changeTheme = () => {
-    if(theme === light) {setTheme(dark);}
-    if(theme === dark) {setTheme(light);}
+    if(theme === lightTheme) {setTheme(darkTheme);}
+    if(theme === darkTheme) {setTheme(lightTheme);}
   };
 
   const generateRandomArray = () => {
@@ -52,7 +56,7 @@ const Main = () => {
     setState({ ...state, trale });
   };
   return (
-    <ThemeProvider theme={themes[theme.type]}>
+    <ThemeProvider theme={lightTheme}>
       <Flex direction="column" full style={{backgroundColor: background}}>
         <GlobalStyle />
         <SortController array={state.array} trale={state.trale} setTheme={changeTheme} />
