@@ -1,26 +1,43 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
-const Bar = ({ width,val,stateA,stateB,stateC,stateD,sorted }) => {
+interface Props {
+  width: number;
+  val: number;
+  stateA: boolean;
+  stateB: boolean;
+  stateC: boolean;
+  stateD: boolean;
+  sorted: boolean;
+}
 
-  const groupManager = () => {
+const Bar: FC <Props> = ({ width,val,stateA,stateB,stateC,stateD,sorted }) => {
+
+  const groupManager = () : string => {
     if (stateA) { return 'stateA'; }
     if (stateB) { return 'stateB'; }
     if (stateC) { return 'stateC'; }
     if (stateD) { return 'stateD'; }
     if (sorted) { return 'sorted'; }
+    return '';
   };
 
   return (
     <BarContainer state={groupManager()} width={width} height={val}>
-      <Text>{val}</Text>
+      <Text>{val > 0 ? val : null}</Text>
     </BarContainer>
   );
 };
 
 export default Bar;
 
-const BarContainer = styled.div`
+interface ContainerProps {
+  width: number;
+  height: number;
+  state: string;
+}
+
+const BarContainer = styled.div<ContainerProps>`
   display: flex;
   width: ${(props) => props.width}%;
   height: ${(props) => props.height * 5}px;

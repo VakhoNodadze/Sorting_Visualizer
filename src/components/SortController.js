@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { withTheme } from 'styled-components';
 // Sub components
 import Sorter from './Sorter';
-import Button from './primitives/Button';
 import { themes } from '../styled/themes';
 
 class SortController extends Component {
@@ -165,13 +164,13 @@ class SortController extends Component {
           groupD={groupD}
           sortedIndices={sortedIndices}
         />
-        <Button 
+        <button 
           variant="contained"
           color="primary"
           onClick={() => this.handleClick()}> 
           {sorting > 0 ? 'Stop!' : 'Sort it!!'}
-        </Button>
-        <Button onClick={() => setTheme()}>Change theme</Button>
+        </button>
+        <button onClick={() => setTheme()}>Change theme</button>
       </Container>
     );
   }

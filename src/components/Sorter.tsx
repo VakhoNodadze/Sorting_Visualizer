@@ -29,7 +29,7 @@ const getListOfBars: Function = (
     return (
       <Bar key={`${i}_${num}`} 
         width={width} 
-        val={width > 4 ? num : null} 
+        val={width > 4 ? num : 0} 
         stateA={stateA} 
         stateB={stateB} 
         stateC={stateC} 

@@ -1,4 +1,4 @@
-
+import baseStyled, { ThemedStyledInterface } from 'styled-components';
 export interface Fonts { 
   bold: string;
   regular: string; 
@@ -313,5 +313,8 @@ const darkTheme = {
   borderRadius: borderRadius,
   margin: margin
 }; 
+
+export type Theme = typeof lightTheme;
+export const styled = baseStyled as ThemedStyledInterface<Theme>;
 
 export { lightTheme, darkTheme };

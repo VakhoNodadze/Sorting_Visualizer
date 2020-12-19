@@ -6,33 +6,35 @@
         "jsx": true
       }
     },
-    "parser": "babel-eslint",
-    "rules": {
-      "camelcase": 0,
-      "max-len": [
-        "warn",
-        124
-      ],
-      "comma-dangle": ["error", "never"],
-      "indent": [
-        "warn",
-        2
-      ],
-      "semi": [
-        2,
-        "always"
-      ],
-      "no-confusing-arrow": "warn",
-      "no-empty-function": "error",
-      "no-lone-blocks": "error",
-      "no-multi-spaces": "error",
-      "no-underscore-dangle": "warn",
-      "no-dupe-else-if": "warn",
-      "arrow-parens": "warn",
-      "default-param-last": "error",
-      "default-case": "error",
-      "curly": "error",
-      "complexity": ["error", 20],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "rules": { 
+        "camelcase": 0,
+        "max-len": [
+            "warn",
+            124
+        ],
+        "comma-dangle": ["error", "never"],
+        "indent": [
+            "warn",
+            2
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "quotes": ["error", "single"],
+        "no-confusing-arrow": "warn",
+        "no-empty-function": "error",
+        "no-lone-blocks": "error",
+        "no-multi-spaces": "error",
+        "no-underscore-dangle": "warn",
+        "no-dupe-else-if": "warn",
+        "arrow-parens": "warn",
+        "default-param-last": "error",
+        "default-case": "error",
+        "curly": "error",
+        "complexity": ["error", 20]
   //    "semi": 1
     }
   }
