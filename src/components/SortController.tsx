@@ -3,10 +3,34 @@ import styled from 'styled-components';
 import { withTheme } from 'styled-components';
 // Sub components
 import Sorter from './Sorter';
-import { themes } from '../styled/themes';
+import { ThemeProps } from '../styled/themes';
+import { Trale } from '../helpers/utils';
 
-class SortController extends Component {
-  constructor(props){
+interface Props extends ThemeProps{
+  array: number[];
+  trale: Trale[];
+  setTheme: Function;
+  newArray?: () => void;
+}
+
+interface State {
+  trale: Trale[];
+  traleStep: number;
+  sortedIndices: number[];
+  originalArray: number[];
+  array: number[];
+  groupA: number[];
+  groupB: number[];
+  groupC: number[];
+  groupD: number[];
+  playbackSpeed: number;
+  timeouts: number[];
+  traceStep: number;
+  timeoutIds: number[];
+}
+
+class SortController extends Component<Props, State> {
+  constructor(props: Props){
     super(props);
     this.state = {
       trale: [],
@@ -21,13 +45,15 @@ class SortController extends Component {
       sortedIndices: [],
   
       playbackSpeed: 1,
-      timeouts: []
+      timeouts: [],
+      traceStep: -1,
+      timeoutIds: []
     };
     this.run = this.run.bind(this);
     this.continue = this.continue.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.array !== this.props.array) {
       this.randomizeArray(this.props.array);
     }
@@ -36,7 +62,7 @@ class SortController extends Component {
     }
   }
 
-  randomizeArray = (array) => {
+  randomizeArray = (array: number[]) => {
     this.setState({
       array,
       trale: [],
@@ -51,7 +77,7 @@ class SortController extends Component {
   };
 
 
-  animate = (currentState) => {
+  animate = (currentState: Trale): (() => void) | undefined => {
     const { array, groupA, groupB, groupC, groupD, sortedIndices } = currentState;
     this.setState({
       array: array,
@@ -61,21 +87,21 @@ class SortController extends Component {
       groupD: groupD,
       sortedIndices: sortedIndices
     });
+    return undefined;
   };
 
   clearTimeouts = () => {
     this.state.timeouts.forEach((timeout) =>
       clearTimeout(timeout)
     );
-    console.log('clearing');
     this.setState({ timeouts: [] });
   };
 
-  run = (trale) => {
+  run = (trale: Trale[]) => {
     const timer = 250 / this.state.playbackSpeed;
     trale.forEach((item, i) => {
       let timeout = setTimeout(
-        (item) => {
+        (item: Trale) => {
           this.setState(
             (prevState) => ({
               traleStep: prevState.traleStep + 1
@@ -86,7 +112,6 @@ class SortController extends Component {
         i * timer,
         item
       );
-
       this.setState((prevState) => ({
         timeouts: [...prevState.timeouts, timeout]
       }));
@@ -127,7 +152,7 @@ class SortController extends Component {
     }
   };
 
-  adjustPlaybackSpeed = (speed) => {
+  adjustPlaybackSpeed = (speed: string) => {
     const playing = this.state.timeoutIds.length > 0;
     this.pause();
     const playbackSpeed = Number(speed.split('x')[0]);
@@ -139,18 +164,21 @@ class SortController extends Component {
   handleClick = () => {
     const { timeouts, trale, traceStep } = this.state;
     if (timeouts.length > 0){
+      console.log('pause');
       return this.pause();
     }
     if(traceStep > -1) {
+      console.log('continue');
       return this.continue();
     }
+    console.log('runing');
     return this.run(trale);
   }
 
 
 
   render() {
-    const { array, groupA, groupB, groupC, groupD, sortedIndices, timeouts } = this.state;
+    const { array, groupA, groupB, groupC, groupD, sortedIndices, timeouts, trale } = this.state;
     const { theme, setTheme } = this.props;
     const sorting = timeouts.length > 0;
     return (
@@ -165,11 +193,10 @@ class SortController extends Component {
           sortedIndices={sortedIndices}
         />
         <button 
-          variant="contained"
-          color="primary"
           onClick={() => this.handleClick()}> 
-          {sorting > 0 ? 'Stop!' : 'Sort it!!'}
+          {sorting ? 'Stop!' : 'Sort it!!'}
         </button>
+        <button onClick={() => this.props.newArray}>New Array</button>
         <button onClick={() => setTheme()}>Change theme</button>
       </Container>
     );

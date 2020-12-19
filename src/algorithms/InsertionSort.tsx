@@ -1,6 +1,6 @@
-import { newTrale, addToTrale } from '../helpers/utils';
+import { newTrale, addToTrale, Trale } from '../helpers/utils';
 
-const InsertionSort = (nums) => {
+const InsertionSort = (nums: number[]) => {
   // Initial State
   const trale = newTrale(nums);
 

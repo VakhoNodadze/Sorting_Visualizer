@@ -48,11 +48,11 @@ interface Props extends ThemeProps {
   groupB: number[];
   groupC: number[];
   groupD: number[];
-  sortedIndices: number;
-  trale: Object[];
+  sortedIndices: number[];
+  // trale: Object[];
 }
 
-const Sorter: FC <Props> = ({numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices,trale, theme}) => {
+const Sorter: FC <Props> = ({numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices, theme}) => {
   return (
     <Flex full align="flex-end" padding={[theme.padding.huge, 0]} 
       style={{backgroundColor: theme.colors.gray400}}>

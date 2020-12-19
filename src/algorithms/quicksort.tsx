@@ -1,10 +1,14 @@
-const swap = (array, leftIndex, rightIndex) => {
+
+interface Array {
+  value: number;
+}
+
+const swap = (array: Array[], leftIndex: number, rightIndex: number) => {
   let temp = array[leftIndex];
   array[leftIndex] = array[rightIndex];
   array[rightIndex] = temp;
 };
-
-const partition = (array, left, right) => {
+const partition = (array: Array[], left: number, right: number) => {
   let pivot = array[Math.floor((right + left) / 2)].value, //middle element
     i = left, //left pointer
     j = right; //right pointer
@@ -27,7 +31,7 @@ const partition = (array, left, right) => {
   return {array, pivot, pivoti: i, pivotj: j, sorting: true};
 };
 
-export const quickSort = (array, left, right) => {
+export const quickSort = (array: Array[], left: number, right: number) => {
   let index;
   if (array.length > 1) {
     const { array: newArray, sorting, pivoti} = partition(array, left, right); //index returned from partition

@@ -1,15 +1,14 @@
 
-interface Trale {
+export interface Trale {
   sortedIndices: number[];
   array: number[];
   groupA: number[];
   groupB: number[];
   groupC: number[];
   groupD: number[];
-  sorting: boolean;
 }
 
-export const newTrale = (array: Object[]) => {
+export const newTrale = (array: number[]) => {
   return [
     {
       array: [...array],
@@ -30,7 +29,6 @@ export const addToTrale = (
   groupB: number[] = [],
   groupC: number[] = [],
   groupD: number[] = [],
-  sorting: boolean = true
 ) => {
   trale.push({
     array: [...array],
@@ -38,8 +36,7 @@ export const addToTrale = (
     groupB: [...groupB],
     groupC: [...groupC],
     groupD: [...groupD],
-    sortedIndices: [...sortedIndices],
-    sorting
+    sortedIndices: [...sortedIndices]
   });
 };
 
@@ -54,9 +51,9 @@ export const swap = (array: number[], i: number, j: number) => {
   array[j] = tmp;
 };
 
-// export const createRange = (start: number, end: number) => {
-//   return [...Array(end - start).keys()].map((elem) => elem + start);
-// };
+export const createRange = (start: number, end: number) => {
+  return [...Array(end - start).keys()].map((elem) => elem + start);
+};
 
 export const createKey = (groupA: number[], groupB: number[], groupC: number[], groupD: number[]) => {
   return { groupA, groupB, groupC, groupD };

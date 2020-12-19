@@ -7,10 +7,11 @@ import SortController from './components/SortController';
 import GlobalStyle from './styled/global';
 import Flex from './components/primitives/Flex';
 import { useEffect } from 'react';
+import { Trale } from './helpers/utils';
 
 interface State {
   array: number[];
-  trale: Object[];
+  trale: Trale[];
 }
 
 const Main: FC = () => {
@@ -43,6 +44,7 @@ const Main: FC = () => {
 
   const generateRandomArray = () => {
     const array = [];
+    console.log('new');
     for(let i = 0; i < 10; i++){
       array.push(getRandomInt(70));
     }
@@ -59,7 +61,7 @@ const Main: FC = () => {
     <ThemeProvider theme={lightTheme}>
       <Flex direction="column" full style={{backgroundColor: background}}>
         <GlobalStyle />
-        <SortController array={state.array} trale={state.trale} setTheme={changeTheme} />
+        <SortController array={state.array} newArray={generateRandomArray} trale={state.trale} setTheme={changeTheme} />
       </Flex>
     </ThemeProvider>
   );
