@@ -3,21 +3,21 @@ interface Array {
   value: number;
 }
 
-const swap = (array: Array[], leftIndex: number, rightIndex: number) => {
+const swap = (array: number[], leftIndex: number, rightIndex: number) => {
   let temp = array[leftIndex];
   array[leftIndex] = array[rightIndex];
   array[rightIndex] = temp;
 };
-const partition = (array: Array[], left: number, right: number) => {
-  let pivot = array[Math.floor((right + left) / 2)].value, //middle element
+const partition = (array: number[], left: number, right: number) => {
+  let pivot = array[Math.floor((right + left) / 2)], //middle element
     i = left, //left pointer
     j = right; //right pointer
   while (i <= j) {
-    while (array[i].value < pivot) {
+    while (array[i] < pivot) {
       i++;
       // return {array, pivot, pivoti: i, pivotj: j, sorting: false};
     }
-    while (array[j].value > pivot) {
+    while (array[j] > pivot) {
       j--;
       // return {array, pivot, pivoti: i, pivotj: j, sorting: false};
     }
@@ -31,16 +31,17 @@ const partition = (array: Array[], left: number, right: number) => {
   return {array, pivot, pivoti: i, pivotj: j, sorting: true};
 };
 
-export const quickSort = (array: Array[], left: number, right: number) => {
-  let index;
+const QuickSort = (array: number[], left: number, right: number) => {
   if (array.length > 1) {
     const { array: newArray, sorting, pivoti} = partition(array, left, right); //index returned from partition
     if (left < pivoti - 1) { //more elements on the left side of the pivot
-      quickSort(newArray, left, pivoti - 1);
+      QuickSort(newArray, left, pivoti - 1);
     }
     if (pivoti < right) { //more elements on the right side of the pivot
-      quickSort(newArray, pivoti, right);
+      QuickSort(newArray, pivoti, right);
     }
   };
   return array;
 };
+
+export default QuickSort;

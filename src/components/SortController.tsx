@@ -10,7 +10,7 @@ interface Props extends ThemeProps{
   array: number[];
   trale: Trale[];
   setTheme: Function;
-  newArray?: () => void;
+  generateNewArray: () => void;
 }
 
 interface State {
@@ -179,7 +179,7 @@ class SortController extends Component<Props, State> {
 
   render() {
     const { array, groupA, groupB, groupC, groupD, sortedIndices, timeouts, trale } = this.state;
-    const { theme, setTheme } = this.props;
+    const { theme, setTheme, generateNewArray } = this.props;
     const sorting = timeouts.length > 0;
     return (
       <Container>
@@ -196,7 +196,7 @@ class SortController extends Component<Props, State> {
           onClick={() => this.handleClick()}> 
           {sorting ? 'Stop!' : 'Sort it!!'}
         </button>
-        <button onClick={() => this.props.newArray}>New Array</button>
+        <button onClick={() => generateNewArray()}>New Array</button>
         <button onClick={() => setTheme()}>Change theme</button>
       </Container>
     );

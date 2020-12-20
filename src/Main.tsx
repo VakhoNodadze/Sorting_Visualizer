@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, createContext } from 'react';
 import InsertionSort from './algorithms/InsertionSort';
 import { ThemeProvider } from 'styled-components';
 
@@ -14,6 +14,8 @@ interface State {
   trale: Trale[];
 }
 
+export const StateContext = createContext({user: {}});
+
 const Main: FC = () => {
   
   const [state, setState] = useState<State> ({array: [], trale: []});
@@ -24,9 +26,9 @@ const Main: FC = () => {
     createTrace();
   }, [state.array]);
 
-  // useEffect(() => {
-  //   setBackground(theme.color.secondaryBG);
-  // }, [theme]);
+  useEffect(() => {
+    setBackground(theme.themeColors.primaryBg);
+  }, [theme]);
 
   useEffect(() => {
     generateRandomArray();
@@ -57,11 +59,14 @@ const Main: FC = () => {
     const trale = InsertionSort(numbers);
     setState({ ...state, trale });
   };
+
+
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={theme}>
       <Flex direction="column" full style={{backgroundColor: background}}>
         <GlobalStyle />
-        <SortController array={state.array} newArray={generateRandomArray} trale={state.trale} setTheme={changeTheme} />
+        <SortController 
+          array={state.array} generateNewArray={generateRandomArray} trale={state.trale} setTheme={changeTheme} />
       </Flex>
     </ThemeProvider>
   );
