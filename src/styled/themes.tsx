@@ -261,11 +261,27 @@ const lightTheme = {
     red000: '#DD727C'
   },
   themeColors: {
-    primaryBg: '#FFFFFF',
-    secondaryBg: '#EAEAEA',
+    blackWhite: '#000',
+    whiteBlack: '#fff',
+    primaryBg: '#F4F8FB',
+    secondaryBg: '#fff',
     primaryTxt: '#707070',
+    primaryTxt2: '#fff',
     activeTxt: '#0000',
-    primaryIcons: '#6F7070'
+    primaryIcons: '#6F7070',
+    sidebarBorder: '#000',
+
+    chartRedBorder: 'rgba(235, 86, 86, 1)',
+    chartRedBg: 'rgba(235, 86, 86, 0.1)',
+    chartBg: 'rgba(255, 255, 255, 1)',
+
+    chartBtnBgAct: '#9BA4AE',
+    chartBtnBgDis: '#F0F0F0',
+    chartBtnAct: '#707070',
+    chartBtnDis: '#B7B7B7',
+    chartBtnCol: '#fff',
+
+    toggler: '#FFDA9E'
   },
   fontSizes: fontSizes,
   fonts: fonts,
@@ -301,11 +317,27 @@ const darkTheme = {
     red000: '#DD727C'
   },
   themeColors: {
+    blackWhite: '#fff',
+    whiteBlack: '#000',
     primaryBg: '#22252A',
     secondaryBg: '#272B2F',
     primaryTxt: '#919294',
+    primaryTxt2: '#000',
     activeTxt: '#FFFFFF',
-    primaryIcons: '#8D8E90'
+    primaryIcons: '#8D8E90',
+    sidebarBorder: 'transparent',
+
+    chartRedBorder: 'rgba(235, 86, 86, 1)',
+    chartRedBg: 'rgba(189, 65, 66, 0.2)',
+    chartBg: 'rgba(34, 37, 42, 1)',
+
+    chartBtnBgAct: '#22262B',
+    chartBtnBgDis: '#54575A',
+    chartBtnAct: '#919294',
+    chartBtnDis: '#B7B7B7',
+    chartBtnCol: '#fff',
+
+    toggler: '##7754F8'
   },
   fontSizes: fontSizes,
   fonts: fonts,

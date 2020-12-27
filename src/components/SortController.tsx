@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import { withTheme } from 'styled-components';
 // Sub components
 import Sorter from './Sorter';
-import { ThemeProps } from '../styled/themes';
-import { Trale } from '../helpers/utils';
+import SortInfo from './SortInfo';
+import { StateContext } from 'Main';
+import { ThemeProps } from 'styled/themes';
+import { Trale } from 'helpers/utils';
+import Flex from 'components/primitives/Flex';
+import { IconItem } from 'components/primitives/Icons';
 
 interface Props extends ThemeProps{
   array: number[];
@@ -52,6 +56,7 @@ class SortController extends Component<Props, State> {
     this.run = this.run.bind(this);
     this.continue = this.continue.bind(this);
   }
+
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.array !== this.props.array) {
@@ -182,23 +187,36 @@ class SortController extends Component<Props, State> {
     const { theme, setTheme, generateNewArray } = this.props;
     const sorting = timeouts.length > 0;
     return (
-      <Container>
-        <Sorter
-          numbers={array}
-          maxNum={Math.max(...array)}
-          groupA={groupA}
-          groupB={groupB}
-          groupC={groupC}
-          groupD={groupD}
-          sortedIndices={sortedIndices}
-        />
-        <button 
-          onClick={() => this.handleClick()}> 
-          {sorting ? 'Stop!' : 'Sort it!!'}
-        </button>
-        <button onClick={() => generateNewArray()}>New Array</button>
-        <button onClick={() => setTheme()}>Change theme</button>
-      </Container>
+      <StateContext.Consumer>
+        {
+          (context) => 
+            <Container>
+              <Sorter
+                numbers={array}
+                maxNum={Math.max(...array)}
+                groupA={groupA}
+                groupB={groupB}
+                groupC={groupC}
+                groupD={groupD}
+                sortedIndices={sortedIndices}
+              />
+              <Flex justify="between">
+                <IconItem name="Backwards" theme={theme} />
+                {
+                  sorting ? <IconItem name="Pause" theme={theme} onClick={() => this.handleClick()} /> 
+                    : <IconItem name="Play" theme={theme} onClick={() => this.handleClick()} />
+                }
+                <IconItem name="Forwards" theme={theme} />
+              </Flex>
+              <button onClick={() => generateNewArray()}>New Array</button>
+              <button onClick={() => setTheme()} 
+                style={{position: 'absolute', top: 0, right: 0, margin: '1.5rem'}}>
+            Change theme
+              </button>
+              <SortInfo {...context.description} />
+            </Container>
+        }
+      </StateContext.Consumer>
     );
   }
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { withTheme } from 'styled-components';
 
-import { padding, ThemeProps } from '../styled/themes';
+import { padding, ThemeProps } from 'styled/themes';
 
 import Bar from './primitives/Bar';
 import Flex from './primitives/Flex';
@@ -54,8 +54,8 @@ interface Props extends ThemeProps {
 
 const Sorter: FC <Props> = ({numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices, theme}) => {
   return (
-    <Flex full align="flex-end" padding={[theme.padding.huge, 0]} 
-      style={{backgroundColor: theme.colors.gray400}}>
+    <Flex full align='end' padding={[theme.padding.huge, 0]} 
+      style={{backgroundColor: theme.colors.gray400, borderRadius: theme.borderRadius.default}}>
       {getListOfBars(numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices)}
     </Flex>
   );
@@ -82,7 +82,7 @@ const Container = styled.div<ContainerProps> `
   height: 40vh;
   padding: 1rem;
   display: flex;
-  background-color:${props => props.bg};
+  background-color:${(props) => props.bg};
   flex-direction: row;
   align-items: flex-end;
   transition: 0.75s ease-in-out;

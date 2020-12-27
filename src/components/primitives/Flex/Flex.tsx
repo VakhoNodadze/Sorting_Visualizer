@@ -1,12 +1,47 @@
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
+import { styled } from 'styled/themes';
+
+const direction = {
+  row: 'row',
+  column: 'column'
+};
+
+const wrap = {
+  wrap: 'wrap',
+  noWrap: 'no-wrap'
+};
+
+const justify = {
+  center: 'center',
+  between: 'space-between',
+  around: 'space-around',
+  evenly: 'space-evenly',
+  start: 'flex-start',
+  end: 'flex-end'
+};
+
+const alignContent = {
+  center: 'center',
+  between: 'space-between',
+  around: 'space-around',
+  evenly: 'space-evenly',
+  start: 'flex-start',
+  end: 'flex-end'
+};
+
+const align = {
+  center: 'center',
+  start: 'flex-start',
+  end: 'flex-end'
+};
 
 interface Props {
   inline?: string;
-  direction?: string;
-  wrap?: string;
-  justify?: string;
-  alignContent?: string;
-  align?: string;
+  direction?: keyof typeof direction;
+  wrap?: keyof typeof wrap;
+  justify?: keyof typeof justify;
+  alignContent?: keyof typeof alignContent;
+  align?: keyof typeof align;
   full?: boolean;
   center?: boolean;
   width?: string;
@@ -31,23 +66,23 @@ const Flex = styled.div<Props>`
     `};
   ${(props) => props.direction
     && css`
-      flex-direction: ${props.direction};
+      flex-direction: ${direction[props.direction]};
     `};
   ${(props) => props.wrap
     && css`
-      flex-wrap: ${props.wrap};
+      flex-wrap: ${wrap[props.wrap]};
     `};
   ${(props) => props.justify
     && css`
-      justify-content: ${props.justify};
+      justify-content: ${justify[props.justify]};
     `};
   ${(props) => props.alignContent
     && css`
-      align-content: ${props.alignContent};
+      align-content: ${alignContent[props.alignContent]};
     `};
   ${(props) => props.align
     && css`
-      align-items: ${props.align};
+      align-items: ${align[props.align]};
     `};
   ${(props) => props.full
     && css`

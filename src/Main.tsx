@@ -1,5 +1,8 @@
 import React, { FC, useState, createContext } from 'react';
-import InsertionSort from './algorithms/InsertionSort';
+import InsertionSort, { 
+  InsertionSortKey,
+  InsertionSortDesc } 
+  from './algorithms/InsertionSort';
 import { ThemeProvider } from 'styled-components';
 
 import { lightTheme, darkTheme, ThemeProps } from './styled/themes';
@@ -9,19 +12,44 @@ import Flex from './components/primitives/Flex';
 import { useEffect } from 'react';
 import { Trale } from './helpers/utils';
 
+const ALGORITHM = {
+  'Insertion Sort': InsertionSort
+};
+
+const ALGORITHM_KEY = {
+  'Insertion Sort': InsertionSortKey
+};
+
+const ALGORITHM_DESC = {
+  'Insertion Sort': InsertionSortDesc
+};
 interface State {
   array: number[];
   trale: Trale[];
 }
 
-export const StateContext = createContext({user: {}});
+
+interface ContextProps {
+  algorithm: keyof typeof ALGORITHM;
+  array: number[];
+  trale: Trale[];
+  description: any;
+  colors: any;
+  changeAlgorithm: any;
+};
+
+export const StateContext = createContext<ContextProps>(
+  {algorithm: 'Insertion Sort', array: [], trale: [], description: null, colors: null, changeAlgorithm: null}
+);
 
 const Main: FC = () => {
   
   const [state, setState] = useState<State> ({array: [], trale: []});
   const [theme, setTheme] = useState(lightTheme);
   const [background, setBackground] = useState(theme.themeColors.primaryBg);
+  const [algorithm, setAlgorithm] = useState<keyof typeof ALGORITHM>('Insertion Sort');
 
+  
   useEffect(() => {
     createTrace();
   }, [state.array]);
@@ -63,11 +91,16 @@ const Main: FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Flex direction="column" full style={{backgroundColor: background}}>
-        <GlobalStyle />
-        <SortController 
-          array={state.array} generateNewArray={generateRandomArray} trale={state.trale} setTheme={changeTheme} />
-      </Flex>
+      <StateContext.Provider 
+        value={{algorithm: 'Insertion Sort', array: state.array, trale: state.trale, 
+          changeAlgorithm: setAlgorithm,
+          description: ALGORITHM_DESC[algorithm], colors: ALGORITHM_KEY[algorithm]}}>
+        <Flex direction="column" full style={{backgroundColor: background, padding: 30}}>
+          <GlobalStyle />
+          <SortController 
+            array={state.array} generateNewArray={generateRandomArray} trale={state.trale} setTheme={changeTheme} />
+        </Flex>
+      </StateContext.Provider>
     </ThemeProvider>
   );
 };
