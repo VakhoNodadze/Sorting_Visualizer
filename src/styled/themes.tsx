@@ -281,7 +281,8 @@ const lightTheme = {
     chartBtnDis: '#B7B7B7',
     chartBtnCol: '#fff',
 
-    toggler: '#FFDA9E'
+    toggler: '#FFDA9E',
+    btnBg: 'green'
   },
   fontSizes: fontSizes,
   fonts: fonts,
@@ -337,7 +338,8 @@ const darkTheme = {
     chartBtnDis: '#B7B7B7',
     chartBtnCol: '#fff',
 
-    toggler: '##7754F8'
+    toggler: '##7754F8',
+    btnBg: '#305ECA'
   },
   fontSizes: fontSizes,
   fonts: fonts,

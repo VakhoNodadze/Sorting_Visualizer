@@ -10,6 +10,8 @@ import { StateContext } from 'Main';
 import { ThemeProps } from 'styled/themes';
 import { Trale } from 'helpers/utils';
 import Flex from 'components/primitives/Flex';
+import Button from 'components/primitives/Button';
+import Select from 'components/primitives/Select';
 import { IconItem } from 'components/primitives/Icons';
 
 interface Props extends ThemeProps{
@@ -33,6 +35,14 @@ interface State {
   timeouts: number[];
   timeoutIds: number[];
 }
+
+const BAR_NUMBERSS = [
+  {label: '10', value: 10},
+  {label: '25', value: 25},
+  {label: '50', value: 50},
+  {label: '75', value: 75},
+  {label: '100', value: 100}
+];
 
 class SortController extends Component<Props, State> {
   constructor(props: Props){
@@ -183,6 +193,7 @@ class SortController extends Component<Props, State> {
     const { array, groupA, groupB, groupC, groupD, sortedIndices, timeouts, trale, traleStep } = this.state;
     const { theme, setTheme, generateNewArray } = this.props;
     const sorting = timeouts.length > 0;
+    const startedProgress = trale.length > 0 && traleStep > 0;
     return (
       <StateContext.Consumer>
         {
@@ -199,7 +210,7 @@ class SortController extends Component<Props, State> {
               />
               <ProgressBar
                 width={
-                  trale.length > 0 && traleStep > 0
+                  startedProgress
                     ? (traleStep /
                         (trale.length - 1)) *
                       100
@@ -214,11 +225,17 @@ class SortController extends Component<Props, State> {
                 }
                 <IconItem name="Forwards" theme={theme} />
               </Flex>
-              <button onClick={() => generateNewArray()}>New Array</button>
-              <button onClick={() => setTheme()} 
+              <div style={{display: 'flex'}}>
+                <Button fluid size="default" fontSize="body" borderRadius="default" 
+                  onClick={() => generateNewArray()} style={{marginRight: '2rem'}}>New Array</Button>
+                <Select options={BAR_NUMBERSS} 
+                  onChange={(e: any) => context.handleBarChange(Number(e.target.value))} 
+                  width="5rem" defaultValue={context.barNumber} />
+              </div>
+              <Button fluid size="default" fontSize="body" borderRadius="rounded" onClick={() => setTheme()} 
                 style={{position: 'absolute', top: 0, right: 0, margin: '1.5rem'}}>
-            Change theme
-              </button>
+            Dark Mode {context.theme === 'dark' ? 'On' : 'Off'}
+              </Button>
               <ColorsInfo {...context.colors} />
               <SortInfo {...context.description} />
             </Container>

@@ -36,17 +36,23 @@ interface ContextProps {
   description: any;
   colors: any;
   changeAlgorithm: any;
+  barNumber: number;
+  handleBarChange: any;
+  theme: string;
 };
 
 export const StateContext = createContext<ContextProps>(
-  {algorithm: 'Insertion Sort', array: [], trale: [], description: null, colors: null, changeAlgorithm: null}
+  {algorithm: 'Insertion Sort', array: [], trale: [], description: null, colors: null, changeAlgorithm: null,
+    barNumber: 10, handleBarChange: null, theme: lightTheme.mode}
 );
 
 const Main: FC = () => {
+
+  const [theme, setTheme] = useState(lightTheme);
   
   const [state, setState] = useState<State> ({array: [], trale: []});
-  const [theme, setTheme] = useState(lightTheme);
   const [background, setBackground] = useState(theme.themeColors.primaryBg);
+  const [barNumber, setBarNumber] = useState(10);
   const [algorithm, setAlgorithm] = useState<keyof typeof ALGORITHM>('Insertion Sort');
 
   
@@ -61,10 +67,18 @@ const Main: FC = () => {
   useEffect(() => {
     generateRandomArray();
   }, []);
+  
+  useEffect(() => {
+    generateRandomArray();
+  }, [barNumber]);
 
+  const handleBarChange = (num: number) => {
+    setBarNumber(num);
+    console.log('eeee', typeof num);
+  };
 
-  const getRandomInt = (max: number) => {
-    return Math.floor(Math.random() * Math.floor(max)) + 1;
+  const getRandomInt = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min) + min);
   };
 
   const changeTheme = () => {
@@ -74,9 +88,9 @@ const Main: FC = () => {
 
   const generateRandomArray = () => {
     const array = [];
-    console.log('new');
-    for(let i = 0; i < 10; i++){
-      array.push(getRandomInt(70));
+    console.log('new', typeof barNumber);
+    for(let i = 0; i < barNumber; i++){
+      array.push(getRandomInt(5, 100));
     }
 
     setState({array,trale: []});
@@ -93,7 +107,7 @@ const Main: FC = () => {
     <ThemeProvider theme={theme}>
       <StateContext.Provider 
         value={{algorithm: 'Insertion Sort', array: state.array, trale: state.trale, 
-          changeAlgorithm: setAlgorithm,
+          changeAlgorithm: setAlgorithm, barNumber, handleBarChange, theme: theme.mode,
           description: ALGORITHM_DESC[algorithm], colors: ALGORITHM_KEY[algorithm]}}>
         <Flex direction="column" full style={{backgroundColor: background, padding: 30}}>
           <GlobalStyle />

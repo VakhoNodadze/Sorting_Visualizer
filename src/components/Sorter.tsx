@@ -29,7 +29,7 @@ const getListOfBars: Function = (
     return (
       <Bar key={`${i}_${num}`} 
         width={width} 
-        val={width > 4 ? num : 0} 
+        val={num} 
         stateA={stateA} 
         stateB={stateB} 
         stateC={stateC} 
@@ -54,7 +54,7 @@ interface Props extends ThemeProps {
 
 const Sorter: FC <Props> = ({numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices, theme}) => {
   return (
-    <Flex full align='end' padding={[theme.padding.huge, 0]} 
+    <Flex width="100%" height="405px" align='end' padding={[theme.padding.huge, 0]} 
       style={{backgroundColor: theme.colors.gray400, borderRadius: theme.borderRadius.default}}>
       {getListOfBars(numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices)}
     </Flex>

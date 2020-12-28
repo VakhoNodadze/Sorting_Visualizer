@@ -23,8 +23,8 @@ const Bar: FC <Props> = ({ width,val,stateA,stateB,stateC,stateD,sorted }) => {
   };
 
   return (
-    <BarContainer state={groupManager()} width={width} height={val}>
-      <Text>{val > 0 ? val : null}</Text>
+    <BarContainer state={groupManager()} width={width} height={val} margin={width}>
+      <Text>{width > 4 ? val : null}</Text>
     </BarContainer>
   );
 };
@@ -35,16 +35,17 @@ interface ContainerProps {
   width: number;
   height: number;
   state: string;
+  margin: number;
 }
 
 const BarContainer = styled.div<ContainerProps>`
   display: flex;
   width: ${(props) => props.width}%;
-  height: ${(props) => props.height * 5}px;
+  height: ${(props) => props.height * 4}px;
   align-items: flex-end;
   transition: 125ms ease-in-out;
   color: rgb(58, 58, 60);
-  margin: 1.2rem 1.2rem 0.1rem 1.2rem;
+  margin: 0.1rem ${(props) => props.margin * 0.3}%;
   justify-content: center;
   border-radius: 5px;
   background-color: ${(props) => {
