@@ -4,6 +4,8 @@ import { withTheme } from 'styled-components';
 // Sub components
 import Sorter from './Sorter';
 import SortInfo from './SortInfo';
+import ColorsInfo from './Colors';
+import ProgressBar from 'components/ProgressBar';
 import { StateContext } from 'Main';
 import { ThemeProps } from 'styled/themes';
 import { Trale } from 'helpers/utils';
@@ -29,7 +31,6 @@ interface State {
   groupD: number[];
   playbackSpeed: number;
   timeouts: number[];
-  traceStep: number;
   timeoutIds: number[];
 }
 
@@ -50,7 +51,6 @@ class SortController extends Component<Props, State> {
   
       playbackSpeed: 1,
       timeouts: [],
-      traceStep: -1,
       timeoutIds: []
     };
     this.run = this.run.bind(this);
@@ -167,23 +167,20 @@ class SortController extends Component<Props, State> {
   };
 
   handleClick = () => {
-    const { timeouts, trale, traceStep } = this.state;
+    const { timeouts, trale, traleStep } = this.state;
     if (timeouts.length > 0){
-      console.log('pause');
       return this.pause();
     }
-    if(traceStep > -1) {
-      console.log('continue');
+    if(traleStep > -1) {
       return this.continue();
     }
-    console.log('runing');
     return this.run(trale);
   }
 
 
 
   render() {
-    const { array, groupA, groupB, groupC, groupD, sortedIndices, timeouts, trale } = this.state;
+    const { array, groupA, groupB, groupC, groupD, sortedIndices, timeouts, trale, traleStep } = this.state;
     const { theme, setTheme, generateNewArray } = this.props;
     const sorting = timeouts.length > 0;
     return (
@@ -200,6 +197,15 @@ class SortController extends Component<Props, State> {
                 groupD={groupD}
                 sortedIndices={sortedIndices}
               />
+              <ProgressBar
+                width={
+                  trale.length > 0 && traleStep > 0
+                    ? (traleStep /
+                        (trale.length - 1)) *
+                      100
+                    : 0
+                }
+              />
               <Flex justify="between">
                 <IconItem name="Backwards" theme={theme} />
                 {
@@ -213,6 +219,7 @@ class SortController extends Component<Props, State> {
                 style={{position: 'absolute', top: 0, right: 0, margin: '1.5rem'}}>
             Change theme
               </button>
+              <ColorsInfo {...context.colors} />
               <SortInfo {...context.description} />
             </Container>
         }

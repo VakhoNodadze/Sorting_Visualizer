@@ -21,19 +21,21 @@ const SortInfo: FC <Arguments> = ({
   return (
     <div className="SortInfo">
       <hr />
-      <h1>{title ? title : 'Select Algorithm'}</h1>
 
       <div className="SortInfo__Body">
-        <article className="SortInfo__Article">
-          {description ? (
-            description
-          ) : (
-            <p>
+        <div className="SortInfo__Article">
+          <h1>{title ? title : 'Select Algorithm'}</h1>
+          <article>
+            {description ? (
+              description
+            ) : (
+              <p>
               You must select an algorithm before you can visualize it's
               execution on an array of numbers.
-            </p>
-          )}
-        </article>
+              </p>
+            )}
+          </article>
+        </div>
 
         <aside className="SortInfo__Aside">
           <h3>Performance</h3>
