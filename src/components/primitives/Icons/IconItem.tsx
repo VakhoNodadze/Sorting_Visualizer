@@ -11,19 +11,19 @@ interface IconProps extends ThemeProps {
     activeColor?: string;
     defaultColor?: string;
     [x:string]: any;
+    disabled?: boolean;
 }
 
 const IconItem: FC <IconProps> = ({
-  name, onClick, activeColor = '#919294', defaultColor, theme, ...rest
+  name, onClick, disabled = false, activeColor = '#919294', defaultColor, theme, ...rest
 }) => {
   const Icon = name ? icons[name] : () => null;
   const [isHovered, setIsHovered] = useState(false);
 
-
   return (
     <StyledContainer 
       onClick={onClick} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} {...rest}>
-      <Icon theme={theme} color={isHovered ? activeColor : defaultColor} />
+      <Icon disabled={disabled} theme={theme} color={isHovered ? activeColor : defaultColor} />
     </StyledContainer>
   );
 };

@@ -33,7 +33,6 @@ interface State {
   groupD: number[];
   playbackSpeed: number;
   timeouts: number[];
-  timeoutIds: number[];
 }
 
 const BAR_NUMBERSS = [
@@ -44,6 +43,14 @@ const BAR_NUMBERSS = [
   {label: '100', value: 100}
 ];
 
+const SPEED = [
+  {label: 'x0.25', value: 0.25},
+  {label: 'x0.5', value: 0.5},
+  {label: 'x1', value: 1},
+  {label: 'x2', value: 2},
+  {label: 'x4', value: 4},
+  {label: 'x10', value: 10}
+];
 class SortController extends Component<Props, State> {
   constructor(props: Props){
     super(props);
@@ -60,11 +67,8 @@ class SortController extends Component<Props, State> {
       sortedIndices: [],
   
       playbackSpeed: 1,
-      timeouts: [],
-      timeoutIds: []
+      timeouts: []
     };
-    this.run = this.run.bind(this);
-    this.continue = this.continue.bind(this);
   }
 
 
@@ -76,6 +80,7 @@ class SortController extends Component<Props, State> {
       this.setState({ trale: this.props.trale });
     }
   }
+
 
   randomizeArray = (array: number[]) => {
     this.setState({
@@ -131,7 +136,6 @@ class SortController extends Component<Props, State> {
         timeouts: [...prevState.timeouts, timeout]
       }));
     });
-    
   };
 
   pause = () => {
@@ -143,10 +147,11 @@ class SortController extends Component<Props, State> {
     this.run(trale);
   };
 
-  stepNext = () => {
+  stepForward = () => {
     const trale = this.state.trale;
     const step = this.state.traleStep;
-    if (step < trale.length - 1) {
+    const timeouts = this.state.timeouts;
+    if (step < trale.length - 1 && !(timeouts.length > 0)) {
       const item = trale[step + 1];
       this.setState(
         { traleStep: step + 1 },
@@ -158,7 +163,8 @@ class SortController extends Component<Props, State> {
   stepBackward = () => {
     const trale = this.state.trale;
     const step = this.state.traleStep;
-    if (step > 0) {
+    const timeouts = this.state.timeouts;
+    if (step > 0 && !(timeouts.length > 0)) {
       const item = trale[step - 1];
       this.setState(
         { traleStep: step - 1 },
@@ -167,12 +173,11 @@ class SortController extends Component<Props, State> {
     }
   };
 
-  adjustPlaybackSpeed = (speed: string) => {
-    const playing = this.state.timeoutIds.length > 0;
+  handleSpeedChange = (playbackSpeed: number) => {
+    const sorting = this.state.timeouts.length > 0;
     this.pause();
-    const playbackSpeed = Number(speed.split('x')[0]);
     this.setState({ playbackSpeed }, () => {
-      if (playing) {this.continue();}
+      if (sorting) {this.continue();}
     });
   };
 
@@ -194,6 +199,8 @@ class SortController extends Component<Props, State> {
     const { theme, setTheme, generateNewArray } = this.props;
     const sorting = timeouts.length > 0;
     const startedProgress = trale.length > 0 && traleStep > 0;
+    const moveForwardDisabled = traleStep >= trale.length - 1 || sorting;
+    const moveBackwardDisabled = traleStep <= 0 || sorting;
     return (
       <StateContext.Consumer>
         {
@@ -218,19 +225,30 @@ class SortController extends Component<Props, State> {
                 }
               />
               <Flex justify="between">
-                <IconItem name="Backwards" theme={theme} />
-                {
-                  sorting ? <IconItem name="Pause" theme={theme} onClick={() => this.handleClick()} /> 
-                    : <IconItem name="Play" theme={theme} onClick={() => this.handleClick()} />
-                }
-                <IconItem name="Forwards" theme={theme} />
+                <IconItem disabled={moveBackwardDisabled} name="Backwards" theme={theme} 
+                  onClick={() => this.stepBackward()} />
+                <IconItem name={sorting ? 'Pause' : 'Play'} theme={theme} onClick={() => this.handleClick()} /> 
+                <IconItem disabled={moveForwardDisabled} name="Forwards" theme={theme} 
+                  onClick={this.stepForward} />
               </Flex>
               <div style={{display: 'flex'}}>
-                <Button fluid size="default" fontSize="body" borderRadius="default" 
-                  onClick={() => generateNewArray()} style={{marginRight: '2rem'}}>New Array</Button>
-                <Select options={BAR_NUMBERSS} 
-                  onChange={(e: any) => context.handleBarChange(Number(e.target.value))} 
-                  width="5rem" defaultValue={context.barNumber} />
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                  <p />
+                  <Button fluid size="default" fontSize="body" borderRadius="default" 
+                    onClick={() => generateNewArray()} style={{marginRight: '2rem'}}>New Array</Button>
+                </div>
+                <div style={{display: 'flex', flexDirection: 'column', marginRight: '2rem', alignItems: 'center'}}>
+                  <p>Choose Bar Numbers</p>
+                  <Select options={BAR_NUMBERSS} 
+                    onChange={(e: any) => context.handleBarChange(Number(e.target.value))} 
+                    width="5rem" defaultValue={context.barNumber} />
+                </div>
+                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                  <p>Choose Sorting Speed</p>
+                  <Select options={SPEED} 
+                    onChange={(e: any) => this.handleSpeedChange(Number(e.target.value))} 
+                    width="5rem" defaultValue={this.state.playbackSpeed} />
+                </div>
               </div>
               <Button fluid size="default" fontSize="body" borderRadius="rounded" onClick={() => setTheme()} 
                 style={{position: 'absolute', top: 0, right: 0, margin: '1.5rem'}}>

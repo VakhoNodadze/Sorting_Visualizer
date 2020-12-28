@@ -268,7 +268,7 @@ const lightTheme = {
     primaryTxt: '#707070',
     primaryTxt2: '#fff',
     activeTxt: '#0000',
-    primaryIcons: '#6F7070',
+    primaryIcons: '#000',
     sidebarBorder: '#000',
 
     chartRedBorder: 'rgba(235, 86, 86, 1)',
@@ -325,7 +325,7 @@ const darkTheme = {
     primaryTxt: '#919294',
     primaryTxt2: '#000',
     activeTxt: '#FFFFFF',
-    primaryIcons: '#8D8E90',
+    primaryIcons: '#000',
     sidebarBorder: 'transparent',
 
     chartRedBorder: 'rgba(235, 86, 86, 1)',
