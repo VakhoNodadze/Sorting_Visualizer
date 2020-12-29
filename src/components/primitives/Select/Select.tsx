@@ -4,7 +4,7 @@ import { Selector, Option } from './styled';
 
 interface Props {
   width: any;
-  options: {value: number; label: string}[];
+  options: {value: number | string; label: string}[];
   isActive?: boolean;
   onChange: any;
   defaultValue: any;
@@ -15,12 +15,13 @@ const Select: FC <Props> = ({
 }) => {
   return (
     <Selector width={width} {...props} onChange={onChange}>
-      {isActive ? options?.map((option: {value: number; label: string}) => <Option key={option.value + Math.random()} 
-        selected={defaultValue === option.value}
-        value={option.value}
-        defaultValue={option.label === defaultValue ? defaultValue : option.value}
-      >
-        {option.label}</Option>) : <Option>{defaultValue}</Option>}
+      {isActive ? options?.map((option: {value: number | string; label: string}) => 
+        <Option key={option.value} 
+          selected={defaultValue === option.value}
+          value={option.value}
+          defaultValue={option.label === defaultValue ? defaultValue : option.value}
+        >
+          {option.label}</Option>) : <Option>{defaultValue}</Option>}
     </Selector>
   );
 };

@@ -85,6 +85,8 @@ const StyledBox = styled.div<BoxProps> `
     case 'groupC':
       return 'red';
     case 'groupD':
+      return 'black';
+    case 'sorted':
       return 'green';
     default:
       return '#fff';

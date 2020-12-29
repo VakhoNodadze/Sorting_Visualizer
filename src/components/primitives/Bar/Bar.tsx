@@ -45,7 +45,11 @@ const BarContainer = styled.div<ContainerProps>`
   align-items: flex-end;
   transition: 125ms ease-in-out;
   color: rgb(58, 58, 60);
-  margin: 0.1rem ${(props) => props.margin * 0.3}%;
+  margin: ${
+  ({state, margin}) => (state === 'stateA' || state === 'stateB' || state === 'stateC' || state === 'stateD' ? 
+    `0.1rem ${margin * 0.3}%` : '0.1rem 0')
+};
+  margin-right: 0.5rem;
   justify-content: center;
   border-radius: 5px;
   background-color: ${(props) => {
@@ -56,12 +60,17 @@ const BarContainer = styled.div<ContainerProps>`
       return 'yellow';
     case 'stateC':
       return 'red';
+    case 'stateD':
+      return 'black';
     case 'sorted':
       return 'green';
     default:
       return '#fff';
     }
   }};
+  &:first-of-type{
+    margin-left: 0.5rem;
+  }
 `;
 
 const Text = styled.span `

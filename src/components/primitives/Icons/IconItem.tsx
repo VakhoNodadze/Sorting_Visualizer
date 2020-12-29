@@ -15,7 +15,7 @@ interface IconProps extends ThemeProps {
 }
 
 const IconItem: FC <IconProps> = ({
-  name, onClick, disabled = false, activeColor = '#919294', defaultColor, theme, ...rest
+  name, onClick, disabled = false, activeColor = '#444546', defaultColor, theme, ...rest
 }) => {
   const Icon = name ? icons[name] : () => null;
   const [isHovered, setIsHovered] = useState(false);

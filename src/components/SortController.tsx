@@ -51,6 +51,12 @@ const SPEED = [
   {label: 'x4', value: 4},
   {label: 'x10', value: 10}
 ];
+
+const ALGORITHMS = [
+  {label: 'Insertion Sort', value: 'Insertion Sort'},
+  {label: 'Quick Sort', value: 'Quick Sort'}
+];
+
 class SortController extends Component<Props, State> {
   constructor(props: Props){
     super(props);
@@ -197,7 +203,7 @@ class SortController extends Component<Props, State> {
   render() {
     const { array, groupA, groupB, groupC, groupD, sortedIndices, timeouts, trale, traleStep } = this.state;
     const { theme, setTheme, generateNewArray } = this.props;
-    const sorting = timeouts.length > 0;
+    const sorting = timeouts.length > 0 && traleStep < trale.length;
     const startedProgress = trale.length > 0 && traleStep > 0;
     const moveForwardDisabled = traleStep >= trale.length - 1 || sorting;
     const moveBackwardDisabled = traleStep <= 0 || sorting;
@@ -236,6 +242,12 @@ class SortController extends Component<Props, State> {
                   <p />
                   <Button fluid size="default" fontSize="body" borderRadius="default" 
                     onClick={() => generateNewArray()} style={{marginRight: '2rem'}}>New Array</Button>
+                </div>
+                <div style={{display: 'flex', flexDirection: 'column', marginRight: '2rem', alignItems: 'center'}}>
+                  <p>Choose Sorting Algorithm</p>
+                  <Select options={ALGORITHMS} 
+                    onChange={(e: any) => context.changeAlgorithm((e.target.value))} 
+                    width="8rem" defaultValue={context.barNumber} />
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', marginRight: '2rem', alignItems: 'center'}}>
                   <p>Choose Bar Numbers</p>

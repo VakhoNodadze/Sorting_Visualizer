@@ -33,7 +33,14 @@
     padding-left: 1rem;
     font-weight: 700;
   }
-  
+  @media (max-width: 800px){
+    .SortInfo__Body{
+      flex-direction: column;
+    } 
+    .SortInfo__Article{
+      width: 100%;
+    }
+  }
   /* Large devices (desktops, 992px and up) */
   @media (min-width: 992px) {
     .SortInfo__Aside {

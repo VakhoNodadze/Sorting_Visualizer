@@ -3,6 +3,10 @@ import InsertionSort, {
   InsertionSortKey,
   InsertionSortDesc } 
   from './algorithms/InsertionSort';
+import QuickSort, { 
+  QuickSortKey,
+  QuickSortDesc } 
+  from './algorithms/QuickSort';
 import { ThemeProvider } from 'styled-components';
 
 import { lightTheme, darkTheme, ThemeProps } from './styled/themes';
@@ -13,15 +17,18 @@ import { useEffect } from 'react';
 import { Trale } from './helpers/utils';
 
 const ALGORITHM = {
-  'Insertion Sort': InsertionSort
+  'Insertion Sort': InsertionSort,
+  'Quick Sort': QuickSort
 };
 
 const ALGORITHM_KEY = {
-  'Insertion Sort': InsertionSortKey
+  'Insertion Sort': InsertionSortKey,
+  'Quick Sort': QuickSortKey
 };
 
 const ALGORITHM_DESC = {
-  'Insertion Sort': InsertionSortDesc
+  'Insertion Sort': InsertionSortDesc,
+  'Quick Sort': QuickSortDesc
 };
 interface State {
   array: number[];
@@ -74,7 +81,6 @@ const Main: FC = () => {
 
   const handleBarChange = (num: number) => {
     setBarNumber(num);
-    console.log('eeee', typeof num);
   };
 
   const getRandomInt = (min: number, max: number) => {

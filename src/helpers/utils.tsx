@@ -55,6 +55,6 @@ export const createRange = (start: number, end: number) => {
   return [...Array(end - start).keys()].map((elem) => elem + start);
 };
 
-export const createKey = (groupA: string, groupB: string, groupC: string, groupD?: string) => {
+export const createKey = (groupA: string | null, groupB: string | null, groupC: string | null, groupD?: string | null) => {
   return { groupA, groupB, groupC, groupD };
 };
