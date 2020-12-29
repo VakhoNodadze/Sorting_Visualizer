@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { withTheme } from 'styled-components';
 
-import { padding, ThemeProps } from 'styled/themes';
+import { ThemeProps } from 'styled/themes';
 
 import Bar from './primitives/Bar';
 import Flex from './primitives/Flex';

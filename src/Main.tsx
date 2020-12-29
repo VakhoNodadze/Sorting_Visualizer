@@ -78,6 +78,7 @@ const Main: FC = () => {
   useEffect(() => {
     generateRandomArray();
   }, [barNumber]);
+  
 
   const handleBarChange = (num: number) => {
     setBarNumber(num);
@@ -94,7 +95,6 @@ const Main: FC = () => {
 
   const generateRandomArray = () => {
     const array = [];
-    console.log('new', typeof barNumber);
     for(let i = 0; i < barNumber; i++){
       array.push(getRandomInt(5, 100));
     }
@@ -104,7 +104,7 @@ const Main: FC = () => {
 
   const createTrace = () => {
     const numbers = [...state.array];
-    const trale = InsertionSort(numbers);
+    const trale = ALGORITHM[algorithm](numbers);
     setState({ ...state, trale });
   };
 
