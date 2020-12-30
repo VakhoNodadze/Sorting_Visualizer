@@ -1,4 +1,7 @@
 import React, { FC, useState, createContext } from 'react';
+import { ThemeProvider } from 'styled-components';
+
+import 'styled/styles.css';
 import InsertionSort, { 
   InsertionSortKey,
   InsertionSortDesc } 
@@ -7,7 +10,14 @@ import QuickSort, {
   QuickSortKey,
   QuickSortDesc } 
   from './algorithms/QuickSort';
-import { ThemeProvider } from 'styled-components';
+import BubbleSort, { 
+  BubbleSortKey,
+  BubbleSortDesc } 
+  from './algorithms/BubbleSort';
+import MergeSort, { 
+  MergeSortKey,
+  MergeSortDesc } 
+  from './algorithms/MergeSort';
 
 import { lightTheme, darkTheme, ThemeProps } from './styled/themes';
 import SortController from './components/SortController';
@@ -18,17 +28,23 @@ import { Trale } from './helpers/utils';
 
 const ALGORITHM = {
   'Insertion Sort': InsertionSort,
-  'Quick Sort': QuickSort
+  'Quick Sort': QuickSort,
+  'Bubble Sort': BubbleSort,
+  'Merge Sort': MergeSort
 };
 
 const ALGORITHM_KEY = {
   'Insertion Sort': InsertionSortKey,
-  'Quick Sort': QuickSortKey
+  'Bubble Sort': BubbleSortKey,
+  'Quick Sort': QuickSortKey,
+  'Merge Sort': MergeSortKey
 };
 
 const ALGORITHM_DESC = {
   'Insertion Sort': InsertionSortDesc,
-  'Quick Sort': QuickSortDesc
+  'Bubble Sort': BubbleSortDesc,
+  'Quick Sort': QuickSortDesc,
+  'Merge Sort': MergeSortDesc
 };
 interface State {
   array: number[];
@@ -78,6 +94,10 @@ const Main: FC = () => {
   useEffect(() => {
     generateRandomArray();
   }, [barNumber]);
+  
+  useEffect(() => {
+    generateRandomArray();
+  }, [algorithm]);
   
 
   const handleBarChange = (num: number) => {

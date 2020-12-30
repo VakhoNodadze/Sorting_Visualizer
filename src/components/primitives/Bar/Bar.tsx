@@ -55,15 +55,15 @@ const BarContainer = styled.div<ContainerProps>`
   background-color: ${(props) => {
     switch (props.state) {
     case 'stateA':
-      return 'blue';
+      return '#336699';
     case 'stateB':
-      return 'yellow';
+      return '#FFFF00';
     case 'stateC':
-      return 'red';
+      return '#990033';
     case 'stateD':
-      return 'black';
+      return 'red';
     case 'sorted':
-      return 'green';
+      return '#669966';
     default:
       return '#fff';
     }

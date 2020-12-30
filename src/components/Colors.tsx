@@ -41,6 +41,10 @@ const ColorsInfo: FC <Props> = ({ groupA, groupB, groupC, groupD }) => {
 
   return (
     <StyledContainer>
+      <StyledKeyItem>
+        <StyledBox group={'sorted'} />
+        <span>Sorted</span>
+      </StyledKeyItem>
       {colorA}
       {colorB}
       {colorC}
@@ -79,15 +83,15 @@ const StyledBox = styled.div<BoxProps> `
     background-color: ${({group}) => {
     switch (group) {
     case 'groupA':
-      return 'blue';
+      return '#336699';
     case 'groupB':
-      return 'yellow';
+      return '#FFFF00';
     case 'groupC':
-      return 'red';
+      return '#990033';
     case 'groupD':
-      return 'black';
+      return 'red';
     case 'sorted':
-      return 'green';
+      return '#669966';
     default:
       return '#fff';
     }

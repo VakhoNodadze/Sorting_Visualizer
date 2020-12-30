@@ -54,7 +54,9 @@ const SPEED = [
 
 const ALGORITHMS = [
   {label: 'Insertion Sort', value: 'Insertion Sort'},
-  {label: 'Quick Sort', value: 'Quick Sort'}
+  {label: 'Bubble Sort', value: 'Bubble Sort'},
+  {label: 'Quick Sort', value: 'Quick Sort'},
+  {label: 'Merge Sort', value: 'Merge Sort'}
 ];
 
 class SortController extends Component<Props, State> {
@@ -97,6 +99,7 @@ class SortController extends Component<Props, State> {
       groupB: [],
       groupC: [],
       groupD: [],
+      timeouts: [],
       sortedIndices: [],
       originalArray: [...array]
     });
@@ -237,30 +240,30 @@ class SortController extends Component<Props, State> {
                 <IconItem disabled={moveForwardDisabled} name="Forwards" theme={theme} 
                   onClick={this.stepForward} />
               </Flex>
-              <div style={{display: 'flex'}}>
-                <div style={{display: 'flex', flexDirection: 'column'}}>
+              <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                <SubContainer>
                   <p />
                   <Button fluid size="default" fontSize="body" borderRadius="default" 
                     onClick={() => generateNewArray()} style={{marginRight: '2rem'}}>New Array</Button>
-                </div>
-                <div style={{display: 'flex', flexDirection: 'column', marginRight: '2rem', alignItems: 'center'}}>
+                </SubContainer>
+                <SubContainer>
                   <p>Choose Sorting Algorithm</p>
                   <Select options={ALGORITHMS} 
                     onChange={(e: any) => context.changeAlgorithm((e.target.value))} 
                     width="8rem" defaultValue={context.barNumber} />
-                </div>
-                <div style={{display: 'flex', flexDirection: 'column', marginRight: '2rem', alignItems: 'center'}}>
+                </SubContainer>
+                <SubContainer>
                   <p>Choose Bar Numbers</p>
                   <Select options={BAR_NUMBERSS} 
                     onChange={(e: any) => context.handleBarChange(Number(e.target.value))} 
                     width="5rem" defaultValue={context.barNumber} />
-                </div>
-                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                </SubContainer>
+                <SubContainer>
                   <p>Choose Sorting Speed</p>
                   <Select options={SPEED} 
                     onChange={(e: any) => this.handleSpeedChange(Number(e.target.value))} 
                     width="5rem" defaultValue={this.state.playbackSpeed} />
-                </div>
+                </SubContainer>
               </div>
               <Button fluid size="default" fontSize="body" borderRadius="rounded" onClick={() => setTheme()} 
                 style={{position: 'absolute', top: 0, right: 0, margin: '1.5rem'}}>
@@ -282,4 +285,13 @@ const Container = styled.div `
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+const SubContainer = styled.div `
+  display: flex;
+  flex-direction: column;
+  margin-right: 2rem;
+  align-items: center;
+  @media (max-width: 700px){
+    width: calc(50% - 2rem);
+  }
 `;

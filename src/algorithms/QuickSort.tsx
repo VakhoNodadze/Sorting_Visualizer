@@ -1,4 +1,4 @@
-import { newTrale, addToTrale, createKey, lastSorted, createRange, swap } from '../helpers/utils';
+import { newTrale, addToTrale, createKey, lastSorted, createRange, swap } from 'helpers/utils';
 
 
 const QuickSort = (nums: number[]) => {
@@ -106,7 +106,7 @@ const QuickSort = (nums: number[]) => {
 };
 
 export const QuickSortKey = createKey(
-  'Comparing',
+  'Pivot',
   'Swapping',
   null,
   'Less than pivot'

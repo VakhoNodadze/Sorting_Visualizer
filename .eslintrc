@@ -31,7 +31,6 @@
         "no-underscore-dangle": "warn",
         "no-dupe-else-if": "warn",
         "arrow-parens": "warn",
-        "default-param-last": "error",
         "default-case": "error",
         "curly": "error",
         "complexity": ["error", 20]

@@ -1,4 +1,4 @@
-import { newTrale, addToTrale, createKey } from '../helpers/utils';
+import { newTrale, addToTrale, createKey } from 'helpers/utils';
 
 const InsertionSort = (nums: number[]) => {
   // Initial State
