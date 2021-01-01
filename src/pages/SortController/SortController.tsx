@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withTheme } from 'styled-components';
 // Sub components
-import Sorter from './Sorter';
-import SortInfo from './SortInfo';
-import ColorsInfo from './Colors';
-import ProgressBar from 'components/ProgressBar';
+import SortVisualizer from 'molecules/SortVisualizer';
+import SortInfo from 'molecules/SortInfo';
+import ColorsInfo from 'molecules/Colors';
+import ProgressBar from 'molecules/ProgressBar';
 import { StateContext } from 'Main';
 import { ThemeProps } from 'styled/themes';
 import { Trale } from 'helpers/utils';
-import Flex from 'components/primitives/Flex';
-import Button from 'components/primitives/Button';
-import Select from 'components/primitives/Select';
-import { IconItem } from 'components/primitives/Icons';
+import Flex from 'atoms/Flex';
+import Button from 'atoms/Button';
+import Select from 'atoms/Select';
+import { IconItem } from 'atoms/Icons';
 
 interface Props extends ThemeProps{
   array: number[];
@@ -49,7 +49,8 @@ const SPEED = [
   {label: 'x1', value: 1},
   {label: 'x2', value: 2},
   {label: 'x4', value: 4},
-  {label: 'x10', value: 10}
+  {label: 'x10', value: 10},
+  {label: 'x20', value: 20}
 ];
 
 const ALGORITHMS = [
@@ -215,7 +216,7 @@ class SortController extends Component<Props, State> {
         {
           (context) => 
             <Container>
-              <Sorter
+              <SortVisualizer
                 numbers={array}
                 maxNum={Math.max(...array)}
                 groupA={groupA}
@@ -248,13 +249,13 @@ class SortController extends Component<Props, State> {
                 </SubContainer>
                 <SubContainer>
                   <p>Choose Sorting Algorithm</p>
-                  <Select options={ALGORITHMS} 
+                  <Select options={ALGORITHMS} isActive={!sorting}
                     onChange={(e: any) => context.changeAlgorithm((e.target.value))} 
-                    width="8rem" defaultValue={context.barNumber} />
+                    width="8rem" defaultValue={context.algorithm} />
                 </SubContainer>
                 <SubContainer>
                   <p>Choose Bar Numbers</p>
-                  <Select options={BAR_NUMBERSS} 
+                  <Select options={BAR_NUMBERSS} isActive={!sorting}
                     onChange={(e: any) => context.handleBarChange(Number(e.target.value))} 
                     width="5rem" defaultValue={context.barNumber} />
                 </SubContainer>

@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import { withTheme } from 'styled-components';
 
 import { ThemeProps } from 'styled/themes';
 
-import Bar from './primitives/Bar';
-import Flex from './primitives/Flex';
+import Bar from 'atoms/Bar';
+import Flex from 'atoms/Flex';
 
 const getListOfBars: Function = (
   numbers: number[],
@@ -51,7 +50,7 @@ interface Props extends ThemeProps {
   // trale: Object[];
 }
 
-const Sorter: FC <Props> = ({numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices, theme}) => {
+const SortVisualizer: FC <Props> = ({numbers,maxNum,groupA,groupB,groupC,groupD,sortedIndices, theme}) => {
   return (
     <Flex width="100%" height="405px" align='end' padding={[theme.padding.huge, 0]} 
       style={{backgroundColor: theme.colors.gray400, borderRadius: theme.borderRadius.default}}>
@@ -60,29 +59,5 @@ const Sorter: FC <Props> = ({numbers,maxNum,groupA,groupB,groupC,groupD,sortedIn
   );
 };
 
-// Sorter.propTypes = {
-//   numbers: PropTypes.arrayOf(PropTypes.number),
-//   maxNum: PropTypes.number,
-//   groupA: PropTypes.arrayOf(PropTypes.number),
-//   groupB: PropTypes.arrayOf(PropTypes.number),
-//   groupC: PropTypes.arrayOf(PropTypes.number),
-//   groupD: PropTypes.arrayOf(PropTypes.number),
-//   sortedIndices: PropTypes.arrayOf(PropTypes.number)
-// };
 
-export default withTheme(Sorter);
-
-interface ContainerProps {
-  bg: string;
-}
-
-const Container = styled.div<ContainerProps> `
-  width: 100%;
-  height: 40vh;
-  padding: 1rem;
-  display: flex;
-  background-color:${(props) => props.bg};
-  flex-direction: row;
-  align-items: flex-end;
-  transition: 0.75s ease-in-out;
-`;
+export default withTheme(SortVisualizer);

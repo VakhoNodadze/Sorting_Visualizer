@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 
+import { Body, Article, Aside, Code } from './styled';
+
 interface Arguments {
     title: JSX.Element;
     description: JSX.Element;
@@ -18,12 +20,12 @@ const SortInfo: FC <Arguments> = ({
   space
 }) => {
   return (
-    <div className="SortInfo">
+    <div style={{width: '80%', margin: '0 auto', maxWidth: 1200, textAlign: 'left'}}>
       <hr />
 
-      <div className="SortInfo__Body">
-        <div className="SortInfo__Article">
-          <h1>{title ? title : 'Select Algorithm'}</h1>
+      <Body>
+        <Article>
+          <h1 style={{margin: '1.5rem 0'}}>{title ? title : 'Select Algorithm'}</h1>
           <article>
             {description ? (
               description
@@ -34,43 +36,43 @@ const SortInfo: FC <Arguments> = ({
               </p>
             )}
           </article>
-        </div>
+        </Article>
 
-        <aside className="SortInfo__Aside">
-          <h3>Performance</h3>
+        <Aside>
+          <h3 style={{margin: '1rem 0'}}>Performance</h3>
           <table>
             <tbody>
               <tr>
                 <td>Worst-case time complexity</td>
                 <td>
-                  <code>{worstCase}</code>
+                  <Code>{worstCase}</Code>
                 </td>
               </tr>
 
               <tr>
                 <td>Average time complexity</td>
                 <td>
-                  <code>{avgCase}</code>
+                  <Code>{avgCase}</Code>
                 </td>
               </tr>
 
               <tr>
                 <td>Best-case time complexity</td>
                 <td>
-                  <code>{bestCase}</code>
+                  <Code>{bestCase}</Code>
                 </td>
               </tr>
 
               <tr>
                 <td>Worst-case space complexity</td>
                 <td>
-                  <code>{space}</code>
+                  <Code>{space}</Code>
                 </td>
               </tr>
             </tbody>
           </table>
-        </aside>
-      </div>
+        </Aside>
+      </Body>
     </div>
   );
 };

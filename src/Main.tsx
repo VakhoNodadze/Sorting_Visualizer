@@ -1,7 +1,6 @@
 import React, { FC, useState, createContext } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import 'styled/styles.css';
 import InsertionSort, { 
   InsertionSortKey,
   InsertionSortDesc } 
@@ -20,9 +19,9 @@ import MergeSort, {
   from './algorithms/MergeSort';
 
 import { lightTheme, darkTheme, ThemeProps } from './styled/themes';
-import SortController from './components/SortController';
+import SortController from 'pages/SortController';
 import GlobalStyle from './styled/global';
-import Flex from './components/primitives/Flex';
+import Flex from 'atoms/Flex';
 import { useEffect } from 'react';
 import { Trale } from './helpers/utils';
 

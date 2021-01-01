@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
-import { spacing, styled } from '../../../styled/themes';
+import { spacing, styled } from 'styled/themes';
 
-import { breakpoints } from '../../../styled/themes';
+import { breakpoints } from 'styled/themes';
 interface StyledContainerProps {
   spacing: keyof typeof spacing;
 }

@@ -19,6 +19,6 @@ const Selector = styled.select<Props>`
 const Option = styled.option`
     padding:0 2px 1px;
     background-color: #fff;
-    color: #000
+    color: #000;
 `;
 export { Selector, Option };
